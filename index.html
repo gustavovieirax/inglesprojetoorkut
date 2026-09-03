@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orkut Help CNI - Nostalgia & Quiz</title>
+    <style>
+        /* --- Estilos Globais --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a { text-decoration: none; color: #1155cc; }
+        a:hover { text-decoration: underline; }
+        ul { list-style: none; }
+
+        /* --- Tela de Cadastro Minimalista --- */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #e8f0f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: #fff;
+            padding: 35px 25px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 350px;
+            border: 1px solid #b0c4de;
+        }
+
+        .login-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .login-logos img {
+            max-width: 120px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus { border-color: #1155cc; }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #d82583; 
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover { background-color: #b51c6c; }
+        
+        /* Rodapé da tela de cadastro */
+        .login-footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            padding: 0 10px;
+        }
+
+        #main-site { 
+            display: none; 
+            flex: 1; 
+        }
+
+        /* --- Header (Menu Superior) --- */
+        .top-bar {
+            background-color: #a4c1e4;
+            padding: 2px 10px;
+            font-size: 11px;
+            text-align: right;
+            color: #fff;
+        }
+
+        header {
+            background-color: #d4e5f7;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #fff;
+            flex-wrap: wrap;
+        }
+
+        .logo-nav { display: flex; align-items: center; gap: 15px; }
+        .logo-header img { height: 35px; margin-right: 10px; }
+        .main-nav { display: flex; gap: 5px; }
+
+        .main-nav a {
+            background-color: #84b2de;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .search-bar { display: flex; }
+        .search-bar input { padding: 4px; border: 1px solid #ccc; }
+        .search-bar button { padding: 4px 8px; background: #fff; border: 1px solid #ccc; cursor: pointer; }
+
+        /* --- Layout Principal --- */
+        .container {
+            width: 95%; 
+            max-width: 1400px;
+            margin: 15px auto;
+            display: flex;
+            gap: 15px;
+            padding: 0 10px;
+        }
+
+        .left-col { width: 20%; }
+        .center-col { width: 55%; }
+        .right-col { width: 25%; }
+
+        .box {
+            background: #fff;
+            border: 1px solid #b0c4de;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .profile-img-container { text-align: center; margin-bottom: 10px; }
+        .profile-img-container img { width: 100%; max-width: 150px; border: 1px solid #ccc; padding: 2px; }
+        .upload-btn { display: block; margin-top: 5px; font-size: 11px; }
+        .profile-name { font-weight: bold; color: #1155cc; font-size: 14px; }
+        .profile-username { font-size: 11px; color: #666; margin-top: 2px; }
+
+        .side-menu li { padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 12px; }
+        .side-menu li:first-child { background: #6292c6; color: white; padding: 6px; border-radius: 2px; }
+        .side-menu li:first-child a { color: white; text-decoration: none;}
+
+        /* --- Quiz Minimalista (Centro) --- */
+        .quiz-container { 
+            background: #fff; 
+            padding: 30px; 
+            border: none; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            border-radius: 8px; 
+        }
+        .quiz-title { 
+            color: #333; 
+            border-bottom: 1px solid #eee; 
+            padding-bottom: 15px; 
+            margin-bottom: 25px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        .question { font-size: 17px; margin-bottom: 20px; font-weight: 600; color: #222; }
+        
+        .options button {
+            display: block; width: 100%; text-align: left; padding: 15px;
+            margin-bottom: 10px; background: #fff; border: 1px solid #ddd;
+            border-radius: 6px; cursor: pointer; font-size: 15px;
+            transition: all 0.2s ease;
+        }
+        .options button:hover:not(:disabled) { 
+            border-color: #1155cc; 
+            background: #f8fbff; 
+        }
+        
+        /* Cores de Feedback em Tempo Real */
+        .options button.correct {
+            background-color: #e8f5e9 !important;
+            border-color: #4caf50 !important;
+            color: #2e7d32;
+        }
+        .options button.incorrect {
+            background-color: #ffebee !important;
+            border-color: #f44336 !important;
+            color: #c62828;
+        }
+
+        #score-screen { display: none; text-align: center; }
+        
+        /* Imagem Gerada no Final */
+        #generated-thank-you-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .ad-box { text-align: center; font-size: 11px; color: #666; }
+        .ad-box img { width: 100%; max-width: 120px; margin: 10px 0; }
+
+        /* Rodapé Personalizado (Tela Principal) */
+        .site-footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            margin-top: auto; 
+        }
+
+        /* --- Adaptações Exclusivas para Celular --- */
+        @media (max-width: 768px) {
+            .container { 
+                flex-direction: column; 
+                width: 100%; 
+                padding: 5px 15px; 
+            }
+            .left-col, .center-col, .right-col { width: 100%; margin-bottom: 5px; }
+            
+            header { 
+                flex-direction: column; 
+                align-items: stretch; 
+                padding: 15px; 
+            }
+            .logo-nav { 
+                flex-direction: column; 
+                align-items: center; 
+                gap: 15px; 
+            }
+            .logo-header img { margin: 0; }
+            
+            .main-nav { 
+                flex-wrap: wrap; 
+                justify-content: center; 
+                width: 100%; 
+                gap: 8px; 
+            }
+            .main-nav a { 
+                flex: 1 1 30%;
+                text-align: center; 
+                padding: 8px 5px; 
+            }
+            
+            .search-bar { 
+                margin-top: 15px; 
+                width: 100%; 
+                justify-content: center; 
+            }
+            .search-bar input { width: 70%; padding: 8px; }
+            .search-bar button { padding: 8px 12px; }
+            
+            .top-bar { 
+                text-align: center; 
+                line-height: 1.6; 
+                padding: 8px 5px; 
+            }
+
+            .quiz-container { padding: 20px 15px; }
+            .question { font-size: 16px; }
+            .options button { padding: 12px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-overlay">
+        <div class="login-box">
+            <div class="login-logos">
+                <img src="orkut.webp" alt="Orkut Logo">
+                <img src="helpcni.jpg" alt="Help CNI Logo">
+            </div>
+            
+            <form id="register-form">
+                <div class="input-group">
+                    <input type="text" id="user-name" placeholder="Seu Nome (Ex: João Silva)" required autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="user-username" placeholder="Username (Ex: joao_silva)" required autocomplete="off">
+                </div>
+                <button type="submit" class="login-btn">Entrar na Comunidade</button>
+            </form>
+        </div>
+        
+        <div class="login-footer">
+            Desenvolvido por Gustavo Vieira para apresentação sobre os anos 2000.
+        </div>
+    </div>
+
+    <div id="main-site">
+        <div class="top-bar">
+            Web | Mapas | Notícias | Livros | Tradutor | Gmail | configurações | sair
+        </div>
+
+        <header>
+            <div class="logo-nav">
+                <div class="logo-header">
+                    <img src="orkut.webp" alt="Orkut">
+                </div>
+                <nav class="main-nav">
+                    <a href="#">início</a>
+                    <a href="#">perfil</a>
+                    <a href="#">scraps</a>
+                    <a href="#">comunidades</a>
+                    <a href="#">aplicativos</a>
+                    <a href="#">temas</a>
+                </nav>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="buscar">
+                <button>buscar</button>
+            </div>
+        </header>
+
+        <div class="container">
+            <aside class="left-col">
+                <div class="box">
+                    <div class="profile-img-container">
+                        <img id="profile-img" src="markzinho.webp" alt="Foto do Perfil">
+        
+                    </div>
+                    <div class="profile-name" id="display-name">Carregando...</div>
+                    <div class="profile-username" id="display-username">@carregando</div>
+                    <div style="font-size: 11px; color: green; margin-top: 5px;">● disponível</div>
+                </div>
+
+                <div class="box" style="padding: 0;">
+                    <ul class="side-menu">
+                        <li><a href="#">todas as atualizações</a></li>
+                        <li><a href="#">minhas atualizações</a></li>
+                        <li><a href="#">perfil</a></li>
+                        <li><a href="#">lembretes</a></li>
+                        <li><a href="#">scraps </a></li>
+                        <li><a href="#">fotos </a></li>
+                        <li><a href="#">vídeos </a></li>
+                        <li><a href="#">depoimentos</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="center-col">
+                <div class="quiz-container" id="quiz-area">
+                    <h2 class="quiz-title">2000s Nostalgia Quiz</h2>
+                    
+                    <div id="question-screen">
+                        <div class="question" id="question-text">Loading question...</div>
+                        <div class="options" id="options-container"></div>
+                        <p style="font-size: 12px; color: #999; margin-top: 20px; text-align: right;" id="progress-text">Question 1 of 10</p>
+                    </div>
+
+                    <div id="score-screen">
+                        <img id="generated-thank-you-img" alt="Certificate of Achievement">
+                        <br>
+                        <button onclick="restartQuiz()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Try Again</button>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="right-col">
+                <div class="box ad-box">
+                    <p>publicidade</p>
+                    <img src="propagandaorkut.png" alt="Help CNI" style="max-width: 100px;">
+                    <p>Help CNI Cursos</p>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="site-footer">
+            Trabalho desenvolvido por Gustavo Vieira para apresentação sobre os anos 2000.
+        </footer>
+    </div>
+
+    <script>
+        const registerForm = document.getElementById('register-form');
+        const loginOverlay = document.getElementById('login-overlay');
+        const mainSite = document.getElementById('main-site');
+        const displayName = document.getElementById('display-name');
+        const displayUsername = document.getElementById('display-username');
+        const userNameInput = document.getElementById('user-name');
+
+        registerForm.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            const nameValue = userNameInput.value.trim();
+            const usernameValue = document.getElementById('user-username').value.trim();
+
+            if(nameValue && usernameValue) {
+                displayName.textContent = nameValue;
+                displayUsername.textContent = "@" + usernameValue;
+                
+                loginOverlay.style.display = 'none';
+                mainSite.style.display = 'flex'; 
+                mainSite.style.flexDirection = 'column';
+            }
+        });
+
+        const imageUpload = document.getElementById('image-upload');
+        const profileImg = document.getElementById('profile-img');
+
+        if (imageUpload && profileImg) {
+            imageUpload.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        profileImg.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Everyday situations, no tech jargon, simplified in English
+        const questions = [
+            { question: "What was the golden rule of writing an Orkut Testimonial for a friend?", options: ["Write a highly formal essay.", "Post it, but tell them to delete it so no one else reads it.", "Print it and frame it on the wall.", "Pay a monthly fee to post it."], answer: 1 },
+            { question: "What did you do when someone was ignoring you on MSN Messenger?", options: ["Send a polite follow-up letter.", "Make a collect phone call to their house.", "Send 15 'Nudges' to make their screen shake with a loud noise.", "Go to their house and knock on the door."], answer: 2 },
+            { question: "What was the universal trick to fix a video game that wouldn't load?", options: ["Wash it with soap and water.", "Take it out, blow into it as hard as you can, and put it back in.", "Read the instruction manual.", "Take it to a professional mechanic."], answer: 1 },
+            { question: "How did we bring our favorite music to listen to in the car or on a trip?", options: ["Using Spotify Premium.", "Connecting via Bluetooth.", "Burning a mix CD on the family computer and praying it wouldn't skip.", "Carrying a live band in the back seat."], answer: 2 },
+            { question: "When was the only allowed time to use the internet at home without making your parents angry about the phone bill?", options: ["Tuesday at noon.", "Anytime, internet was completely free.", "Only after midnight or on weekends.", "During dinner time."], answer: 2 },
+            { question: "What usually happened when you tried to download a free song from the internet?", options: ["The singer sent you a thank-you letter.", "You accidentally downloaded a computer virus instead of the song.", "The song arrived by mail the next day.", "The computer gave you a high-five."], answer: 1 },
+            { question: "What did you do when your computer mouse stopped moving smoothly?", options: ["Give it a piece of cheese.", "Open the bottom, take out the heavy rubber ball, and clean the dirt off it.", "Buy a brand new house.", "Water it like a plant."], answer: 1 },
+            { question: "How did people fit everything they wanted to say into one single cell phone text message (SMS) to save money?", options: ["Send a 5-minute voice note instead.", "Write a normal letter and take a picture of it.", "Typ lyk ths wthout ny vwls so it all fts n 1 txt.", "Use a loud megaphone out the window."], answer: 2 },
+            { question: "How did you make the title of your school project look super fancy on the computer?", options: ["By using 3D, rainbow-colored WordArt.", "Hiring a professional painter.", "Buying expensive stickers.", "Putting real glitter on the screen."], answer: 0 },
+            { question: "How did you show your friends the photos you took on a weekend trip?", options: ["Posted a 15-second story on TikTok.", "Sent them to a WhatsApp group chat.", "Took the camera memory card to the store, printed the photos on paper, and put them in an album.", "Swiped left and right on an iPad."], answer: 2 }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionText = document.getElementById("question-text");
+        const optionsContainer = document.getElementById("options-container");
+        const progressText = document.getElementById("progress-text");
+        const questionScreen = document.getElementById("question-screen");
+        const scoreScreen = document.getElementById("score-screen");
+        const generatedImg = document.getElementById("generated-thank-you-img");
+
+        function loadQuestion() {
+            const currentQ = questions[currentQuestionIndex];
+            questionText.textContent = currentQ.question;
+            optionsContainer.innerHTML = ""; 
+
+            currentQ.options.forEach((opt, index) => {
+                const btn = document.createElement("button");
+                btn.textContent = opt;
+                btn.onclick = (e) => checkAnswer(index, e.target);
+                optionsContainer.appendChild(btn);
+            });
+
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+        }
+
+        function checkAnswer(selectedIndex, clickedBtn) {
+            const allBtns = optionsContainer.querySelectorAll('button');
+            allBtns.forEach(btn => btn.disabled = true);
+
+            const correctIndex = questions[currentQuestionIndex].answer;
+
+            if (selectedIndex === correctIndex) {
+                score++;
+                clickedBtn.classList.add('correct');
+            } else {
+                clickedBtn.classList.add('incorrect');
+                allBtns[correctIndex].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion();
+                } else {
+                    showScore();
+                }
+            }, 1500);
+        }
+
+        function generateAcademicCertificate(name, currentScore, totalQuestions) {
+            const canvas = document.createElement("canvas");
+            canvas.width = 800;
+            canvas.height = 600; 
+            const ctx = canvas.getContext("2d");
+
+            ctx.fillStyle = "#fafafa";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = "#2c3e50";
+            ctx.lineWidth = 12;
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            
+            ctx.strokeStyle = "#d82583";
+            ctx.lineWidth = 3;
+            ctx.strokeRect(38, 38, canvas.width - 76, canvas.height - 76);
+
+            ctx.textAlign = "center";
+
+            ctx.fillStyle = "#2c3e50";
+            ctx.font = "bold 42px 'Times New Roman', Times, serif";
+            ctx.fillText("CERTIFICATE OF NOSTALGIA", canvas.width / 2, 130);
+
+            ctx.fillStyle = "#555";
+            ctx.font = "italic 22px 'Times New Roman', Times, serif";
+            ctx.fillText("This is to certify that", canvas.width / 2, 210);
+
+            ctx.fillStyle = "#000";
+            ctx.font = "bold 48px 'Times New Roman', Times, serif";
+            ctx.fillText(name, canvas.width / 2, 280);
+
+            ctx.fillStyle = "#555";
+            ctx.font = "20px Arial, sans-serif";
+            ctx.fillText("has successfully completed the assessment for", canvas.width / 2, 350);
+
+            ctx.fillStyle = "#d82583";
+            ctx.font = "bold 32px Arial, sans-serif";
+            ctx.fillText("The 2000s Era", canvas.width / 2, 400);
+
+            ctx.fillStyle = "#2c3e50";
+            ctx.font = "bold 24px Arial, sans-serif";
+            ctx.fillText(`Final Score: ${currentScore} / ${totalQuestions}`, canvas.width / 2, 460);
+
+            ctx.fillStyle = "#333";
+            ctx.font = "16px Arial, sans-serif";
+            const today = new Date().toLocaleDateString('en-US');
+            ctx.fillText("Date: " + today, 200, 535);
+            
+            ctx.beginPath();
+            ctx.moveTo(120, 515);
+            ctx.lineTo(280, 515);
+            ctx.strokeStyle = "#333";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillText("Orkut Help Signature", 600, 535);
+            
+            ctx.beginPath();
+            ctx.moveTo(520, 515);
+            ctx.lineTo(680, 515);
+            ctx.stroke();
+
+            return canvas.toDataURL("image/png");
+        }
+
+        function showScore() {
+            questionScreen.style.display = "none";
+            scoreScreen.style.display = "block";
+            
+            const playerName = userNameInput.value.trim() || "Student";
+            generatedImg.src = generateAcademicCertificate(playerName, score, questions.length);
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            questionScreen.style.display = "block";
+            scoreScreen.style.display = "none";
+            loadQuestion();
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
