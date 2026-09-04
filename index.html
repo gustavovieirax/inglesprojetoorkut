@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orkut Help CNI - Nostalgia & Quiz</title>
     <style>
+        /* --- Forçar Modo Claro Global --- */
+        :root {
+            color-scheme: light only;
+        }
+
         /* --- Estilos Globais --- */
         * {
             margin: 0;
@@ -14,8 +19,8 @@
         }
 
         body {
-            background: linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%);
-            color: #333;
+            background: linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%) !important;
+            color: #333 !important;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -76,6 +81,8 @@
             border-radius: 4px;
             font-size: 14px;
             outline: none;
+            background-color: #fff !important;
+            color: #333 !important;
             transition: border-color 0.3s;
         }
 
@@ -97,7 +104,6 @@
 
         .login-btn:hover { background-color: #b51c6c; }
         
-        /* Rodapé da tela de cadastro */
         .login-footer {
             position: absolute;
             bottom: 20px;
@@ -136,7 +142,7 @@
         .logo-header img { height: 35px; margin-right: 10px; }
         .main-nav { display: flex; gap: 5px; }
 
-        .main-nav a {
+        .main-nav a, .main-nav button {
             background-color: #84b2de;
             color: white;
             padding: 5px 10px;
@@ -144,11 +150,13 @@
             font-size: 12px;
             font-weight: bold;
             text-decoration: none;
+            border: none;
+            cursor: pointer;
         }
 
         .search-bar { display: flex; }
-        .search-bar input { padding: 4px; border: 1px solid #ccc; }
-        .search-bar button { padding: 4px 8px; background: #fff; border: 1px solid #ccc; cursor: pointer; }
+        .search-bar input { padding: 4px; border: 1px solid #ccc; background: #fff; color: #333; }
+        .search-bar button { padding: 4px 8px; background: #fff; border: 1px solid #ccc; cursor: pointer; color: #333; }
 
         /* --- Layout Principal --- */
         .container {
@@ -174,15 +182,15 @@
 
         .profile-img-container { text-align: center; margin-bottom: 10px; }
         .profile-img-container img { width: 100%; max-width: 150px; border: 1px solid #ccc; padding: 2px; }
-        .upload-btn { display: block; margin-top: 5px; font-size: 11px; }
         .profile-name { font-weight: bold; color: #1155cc; font-size: 14px; }
         .profile-username { font-size: 11px; color: #666; margin-top: 2px; }
 
-        .side-menu li { padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 12px; }
+        .side-menu li { padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 12px; cursor: pointer; }
         .side-menu li:first-child { background: #6292c6; color: white; padding: 6px; border-radius: 2px; }
-        .side-menu li:first-child a { color: white; text-decoration: none;}
+        .side-menu li a { color: #1155cc; text-decoration: none; display: block; }
+        .side-menu li:first-child a { color: white; }
 
-        /* --- Quiz Minimalista (Centro) --- */
+        /* --- Quiz & Conteúdo Central --- */
         .quiz-container { 
             background: #fff; 
             padding: 30px; 
@@ -204,6 +212,7 @@
             display: block; width: 100%; text-align: left; padding: 15px;
             margin-bottom: 10px; background: #fff; border: 1px solid #ddd;
             border-radius: 6px; cursor: pointer; font-size: 15px;
+            color: #333;
             transition: all 0.2s ease;
         }
         .options button:hover:not(:disabled) { 
@@ -211,21 +220,19 @@
             background: #f8fbff; 
         }
         
-        /* Cores de Feedback em Tempo Real */
         .options button.correct {
             background-color: #e8f5e9 !important;
             border-color: #4caf50 !important;
-            color: #2e7d32;
+            color: #2e7d32 !important;
         }
         .options button.incorrect {
             background-color: #ffebee !important;
             border-color: #f44336 !important;
-            color: #c62828;
+            color: #c62828 !important;
         }
 
         #score-screen { display: none; text-align: center; }
         
-        /* Imagem Gerada no Final */
         #generated-thank-you-img {
             max-width: 100%;
             height: auto;
@@ -234,10 +241,46 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
 
+        /* --- Estilos do Pop Pacman (Minijogo) --- */
+        #pacman-area {
+            display: none;
+            text-align: center;
+        }
+        
+        .upload-slots {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .upload-slots div {
+            background: #f0f4f8;
+            padding: 8px;
+            border: 1px dashed #b0c4de;
+            border-radius: 4px;
+        }
+
+        #gameCanvas {
+            background: #111;
+            border: 4px solid #333;
+            border-radius: 6px;
+            display: block;
+            margin: 0 auto 15px auto;
+            max-width: 100%;
+        }
+
+        .game-controls {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
         .ad-box { text-align: center; font-size: 11px; color: #666; }
         .ad-box img { width: 100%; max-width: 120px; margin: 10px 0; }
 
-        /* Rodapé Personalizado (Tela Principal) */
         .site-footer {
             text-align: center;
             padding: 20px;
@@ -246,7 +289,6 @@
             margin-top: auto; 
         }
 
-        /* --- Adaptações Exclusivas para Celular --- */
         @media (max-width: 768px) {
             .container { 
                 flex-direction: column; 
@@ -254,45 +296,15 @@
                 padding: 5px 15px; 
             }
             .left-col, .center-col, .right-col { width: 100%; margin-bottom: 5px; }
-            
-            header { 
-                flex-direction: column; 
-                align-items: stretch; 
-                padding: 15px; 
-            }
-            .logo-nav { 
-                flex-direction: column; 
-                align-items: center; 
-                gap: 15px; 
-            }
+            header { flex-direction: column; align-items: stretch; padding: 15px; }
+            .logo-nav { flex-direction: column; align-items: center; gap: 15px; }
             .logo-header img { margin: 0; }
-            
-            .main-nav { 
-                flex-wrap: wrap; 
-                justify-content: center; 
-                width: 100%; 
-                gap: 8px; 
-            }
-            .main-nav a { 
-                flex: 1 1 30%;
-                text-align: center; 
-                padding: 8px 5px; 
-            }
-            
-            .search-bar { 
-                margin-top: 15px; 
-                width: 100%; 
-                justify-content: center; 
-            }
+            .main-nav { flex-wrap: wrap; justify-content: center; width: 100%; gap: 8px; }
+            .main-nav a, .main-nav button { flex: 1 1 30%; text-align: center; padding: 8px 5px; }
+            .search-bar { margin-top: 15px; width: 100%; justify-content: center; }
             .search-bar input { width: 70%; padding: 8px; }
             .search-bar button { padding: 8px 12px; }
-            
-            .top-bar { 
-                text-align: center; 
-                line-height: 1.6; 
-                padding: 8px 5px; 
-            }
-
+            .top-bar { text-align: center; line-height: 1.6; padding: 8px 5px; }
             .quiz-container { padding: 20px 15px; }
             .question { font-size: 16px; }
             .options button { padding: 12px; font-size: 14px; }
@@ -335,9 +347,9 @@
                     <img src="orkut.webp" alt="Orkut">
                 </div>
                 <nav class="main-nav">
-                    <a href="#">início</a>
-                    <a href="#">perfil</a>
-                    <a href="#">scraps</a>
+                    <a href="#" onclick="showSection('quiz')">início</a>
+                    <a href="#" onclick="showSection('quiz')">perfil</a>
+                    <a href="#" onclick="showSection('pacman')">pop pacman</a>
                     <a href="#">comunidades</a>
                     <a href="#">aplicativos</a>
                     <a href="#">temas</a>
@@ -362,14 +374,14 @@
 
                 <div class="box" style="padding: 0;">
                     <ul class="side-menu">
-                        <li><a href="#">todas as atualizações</a></li>
-                        <li><a href="#">minhas atualizações</a></li>
-                        <li><a href="#">perfil</a></li>
-                        <li><a href="#">lembretes</a></li>
-                        <li><a href="#">scraps </a></li>
-                        <li><a href="#">fotos </a></li>
-                        <li><a href="#">vídeos </a></li>
-                        <li><a href="#">depoimentos</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">todas as atualizações</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">minhas atualizações</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">perfil</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">lembretes</a></li>
+                        <li><a href="#" onclick="showSection('pacman')">pop pacman</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">fotos</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">vídeos</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">depoimentos</a></li>
                     </ul>
                 </div>
             </aside>
@@ -388,6 +400,30 @@
                         <img id="generated-thank-you-img" alt="Certificate of Achievement">
                         <br>
                         <button onclick="restartQuiz()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Try Again</button>
+                    </div>
+                </div>
+
+                <div class="quiz-container" id="pacman-area">
+                    <h2 class="quiz-title">Pop Pacman: Taylor vs Kanye</h2>
+                    
+                    <div class="upload-slots">
+                        <div>
+                            <label>Subir Foto Taylor (Player):<br>
+                            <input type="file" id="upload-taylor" accept="image/*" style="font-size:10px; margin-top:4px;"></label>
+                        </div>
+                        <div>
+                            <label>Subir Foto Kanye (Fantasma):<br>
+                            <input type="file" id="upload-kanye" accept="image/*" style="font-size:10px; margin-top:4px;"></label>
+                        </div>
+                    </div>
+
+                    <div class="game-controls">
+                        Use as <b>Setas do Teclado</b> para fugir do Kanye! | Pontuação: <span id="game-score">0</span>
+                    </div>
+
+                    <canvas id="gameCanvas" width="400" height="300"></canvas>
+                    <div>
+                        <button id="start-game-btn" onclick="toggleGame()" style="padding: 10px 20px; background: #d82583; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Iniciar Jogo</button>
                     </div>
                 </div>
             </main>
@@ -430,22 +466,21 @@
             }
         });
 
-        const imageUpload = document.getElementById('image-upload');
-        const profileImg = document.getElementById('profile-img');
-
-        if (imageUpload && profileImg) {
-            imageUpload.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        profileImg.src = e.target.result;
-                    }
-                    reader.readAsDataURL(file);
-                }
-            });
+        // Alternar entre Quiz e Pacman
+        function showSection(section) {
+            const quizArea = document.getElementById('quiz-area');
+            const pacmanArea = document.getElementById('pacman-area');
+            if(section === 'quiz') {
+                quizArea.style.display = 'block';
+                pacmanArea.style.display = 'none';
+                stopGame();
+            } else if(section === 'pacman') {
+                quizArea.style.display = 'none';
+                pacmanArea.style.display = 'block';
+            }
         }
 
+        // --- Perguntas do Quiz ---
         const questions = [
             { question: "What was the golden rule of writing an Orkut Testimonial for a friend?", options: ["Write a highly formal essay.", "Post it, but tell them to delete it so no one else reads it.", "Print it and frame it on the wall.", "Pay a monthly fee to post it."], answer: 1 },
             { question: "What did you do when someone was ignoring you on MSN Messenger?", options: ["Send a polite follow-up letter.", "Make a collect phone call to their house.", "Send 15 'Nudges' to make their screen shake with a loud noise.", "Go to their house and knock on the door."], answer: 2 },
@@ -555,9 +590,7 @@
             ctx.font = "bold 20px Arial, sans-serif";
             ctx.fillText("Teacher Roberto Mestre Gives You a:", canvas.width / 2, 510);
 
-            // MUDANÇA: Define a imagem padrão como mestreassinatura.jpeg para as notas 0-4
             let gradeImageSrc = "mestreassinatura.jpeg";
-            
             if (currentScore >= 8) {
                 gradeImageSrc = "perfect.jpeg";
             } else if (currentScore >= 5) {
@@ -585,11 +618,14 @@
                 ctx.stroke();
             };
 
-            // Como todas as faixas de nota possuem uma imagem agora, sempre fazemos o carregamento
             return new Promise((resolve) => {
                 const img = new Image();
                 img.onload = () => {
                     ctx.drawImage(img, (canvas.width / 2) - 80, 530, 160, 120);
+                    drawFooter();
+                    resolve(canvas.toDataURL("image/png"));
+                };
+                img.onerror = () => {
                     drawFooter();
                     resolve(canvas.toDataURL("image/png"));
                 };
@@ -614,6 +650,145 @@
         }
 
         loadQuestion();
+
+        // --- Lógica do Minijogo (Pop Pacman: Taylor vs Kanye) ---
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const gameScoreText = document.getElementById("game-score");
+        const startGameBtn = document.getElementById("start-game-btn");
+
+        let gameInterval = null;
+        let gameRunning = false;
+        let gameScore = 0;
+
+        let taylor = { x: 50, y: 50, size: 24, speed: 3, dx: 0, dy: 0 };
+        let kanye = { x: 320, y: 220, size: 24, speed: 1.5 };
+        let star = { x: Math.random() * 350 + 25, y: Math.random() * 250 + 25, size: 14 };
+
+        let taylorImg = null;
+        let kanyeImg = null;
+
+        document.getElementById('upload-taylor').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    taylorImg = new Image();
+                    taylorImg.src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('upload-kanye').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    kanyeImg = new Image();
+                    kanyeImg.src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        window.addEventListener('keydown', function(e) {
+            if (!gameRunning) return;
+            if (e.key === 'ArrowUp') { taylor.dx = 0; taylor.dy = -taylor.speed; }
+            if (e.key === 'ArrowDown') { taylor.dx = 0; taylor.dy = taylor.speed; }
+            if (e.key === 'ArrowLeft') { taylor.dx = -taylor.speed; taylor.dy = 0; }
+            if (e.key === 'ArrowRight') { taylor.dx = taylor.speed; taylor.dy = 0; }
+        });
+
+        function toggleGame() {
+            if (!gameRunning) {
+                startGame();
+            } else {
+                stopGame();
+            }
+        }
+
+        function startGame() {
+            gameRunning = true;
+            gameScore = 0;
+            gameScoreText.textContent = gameScore;
+            startGameBtn.textContent = "Parar Jogo";
+            taylor.x = 50; taylor.y = 50; taylor.dx = 0; taylor.dy = 0;
+            kanye.x = 320; kanye.y = 220;
+            
+            if (gameInterval) clearInterval(gameInterval);
+            gameInterval = setInterval(updateGame, 1000 / 60);
+        }
+
+        function stopGame() {
+            gameRunning = false;
+            startGameBtn.textContent = "Iniciar Jogo";
+            if (gameInterval) clearInterval(gameInterval);
+        }
+
+        function updateGame() {
+            // Movimentação da Taylor
+            taylor.x += taylor.dx;
+            taylor.y += taylor.dy;
+
+            // Limites da Tela
+            if (taylor.x < 0) taylor.x = 0;
+            if (taylor.x > canvas.width - taylor.size) taylor.x = canvas.width - taylor.size;
+            if (taylor.y < 0) taylor.y = 0;
+            if (taylor.y > canvas.height - taylor.size) taylor.y = canvas.height - taylor.size;
+
+            // Kanye persegue a Taylor
+            if (kanye.x < taylor.x) kanye.x += kanye.speed;
+            if (kanye.x > taylor.x) kanye.x -= kanye.speed;
+            if (kanye.y < taylor.y) kanye.y += kanye.speed;
+            if (kanye.y > taylor.y) kanye.y -= kanye.speed;
+
+            // Colisão com a Estrela (Pontinho)
+            let distStar = Math.hypot((taylor.x + taylor.size/2) - (star.x + star.size/2), (taylor.y + taylor.size/2) - (star.y + star.size/2));
+            if (distStar < taylor.size/2 + star.size/2) {
+                gameScore += 10;
+                gameScoreText.textContent = gameScore;
+                star.x = Math.random() * (canvas.width - 40) + 20;
+                star.y = Math.random() * (canvas.height - 40) + 20;
+            }
+
+            // Colisão com o Kanye (Game Over)
+            let distKanye = Math.hypot((taylor.x + taylor.size/2) - (kanye.x + kanye.size/2), (taylor.y + taylor.size/2) - (kanye.y + kanye.size/2));
+            if (distKanye < taylor.size * 0.7) {
+                alert("Game Over! O Kanye te pegou! Pontuação final: " + gameScore);
+                stopGame();
+                return;
+            }
+
+            drawGame();
+        }
+
+        function drawGame() {
+            ctx.fillStyle = "#111";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Desenhar Estrela/Prêmio
+            ctx.fillStyle = "#f1c40f";
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.size/2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Desenhar Taylor (Player)
+            if (taylorImg) {
+                ctx.drawImage(taylorImg, taylor.x, taylor.y, taylor.size, taylor.size);
+            } else {
+                ctx.fillStyle = "#e91e63"; // Cor padrão caso não suba foto
+                ctx.fillRect(taylor.x, taylor.y, taylor.size, taylor.size);
+            }
+
+            // Desenhar Kanye (Fantasma)
+            if (kanyeImg) {
+                ctx.drawImage(kanyeImg, kanye.x, kanye.y, kanye.size, kanye.size);
+            } else {
+                ctx.fillStyle = "#3498db"; // Cor padrão caso não suba foto
+                ctx.fillRect(kanye.x, kanye.y, kanye.size, kanye.size);
+            }
+        }
     </script>
 </body>
 </html>
