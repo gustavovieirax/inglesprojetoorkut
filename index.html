@@ -668,7 +668,7 @@
 
         loadQuestion();
 
-        // --- Lógica do Minijogo (Pop Pacman: Taylor vs Kanye) ---
+        // --- Lógica do Minijogo (Pop Pacman: Taylor vs Kanye com Links da Internet) ---
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const gameScoreText = document.getElementById("game-score");
@@ -682,14 +682,16 @@
         let kanye = { x: 280, y: 180, size: 32, speed: 1.2 };
         let star = { x: Math.random() * 300 + 30, y: Math.random() * 200 + 30, size: 14 };
 
-        // Carregamento dos arquivos locais com tratamento de falha (fallback seguro)
+        // Carregamento por links públicos da internet para garantir o funcionamento imediato sem falhas de CORS local
         const taylorImg = new Image();
-        taylorImg.src = "taylorswift.jpg";
+        taylorImg.crossOrigin = "anonymous";
+        taylorImg.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150";
         let taylorLoaded = false;
         taylorImg.onload = () => { taylorLoaded = true; };
 
         const kanyeImg = new Image();
-        kanyeImg.src = "kanye.jpg";
+        kanyeImg.crossOrigin = "anonymous";
+        kanyeImg.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150";
         let kanyeLoaded = false;
         kanyeImg.onload = () => { kanyeLoaded = true; };
 
@@ -783,7 +785,7 @@
             ctx.arc(star.x, star.y, star.size/2, 0, Math.PI * 2);
             ctx.fill();
 
-            // Desenhar Taylor (Player)
+            // Desenhar Taylor (Player) com formato circular recortado perfeitamente
             ctx.save();
             ctx.beginPath();
             ctx.arc(taylor.x + taylor.size/2, taylor.y + taylor.size/2, taylor.size/2, 0, Math.PI * 2);
@@ -796,7 +798,7 @@
             }
             ctx.restore();
 
-            // Desenhar Kanye (Fantasma)
+            // Desenhar Kanye (Fantasma) com formato circular recortado perfeitamente
             ctx.save();
             ctx.beginPath();
             ctx.arc(kanye.x + kanye.size/2, kanye.y + kanye.size/2, kanye.size/2, 0, Math.PI * 2);
