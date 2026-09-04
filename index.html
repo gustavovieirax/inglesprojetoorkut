@@ -447,7 +447,6 @@
             });
         }
 
-        // Everyday situations, no tech jargon, simplified in English
         const questions = [
             { question: "What was the golden rule of writing an Orkut Testimonial for a friend?", options: ["Write a highly formal essay.", "Post it, but tell them to delete it so no one else reads it.", "Print it and frame it on the wall.", "Pay a monthly fee to post it."], answer: 1 },
             { question: "What did you do when someone was ignoring you on MSN Messenger?", options: ["Send a polite follow-up letter.", "Make a collect phone call to their house.", "Send 15 'Nudges' to make their screen shake with a loud noise.", "Go to their house and knock on the door."], answer: 2 },
@@ -510,10 +509,10 @@
             }, 1500);
         }
 
-        function generateAcademicCertificate(name, currentScore, totalQuestions) {
+        async function generateAcademicCertificate(name, currentScore, totalQuestions) {
             const canvas = document.createElement("canvas");
             canvas.width = 800;
-            canvas.height = 600; 
+            canvas.height = 750; // Altura aumentada
             const ctx = canvas.getContext("2d");
 
             ctx.fillStyle = "#fafafa";
@@ -553,34 +552,60 @@
             ctx.font = "bold 24px Arial, sans-serif";
             ctx.fillText(`Final Score: ${currentScore} / ${totalQuestions}`, canvas.width / 2, 460);
 
-            ctx.fillStyle = "#333";
-            ctx.font = "16px Arial, sans-serif";
-            const today = new Date().toLocaleDateString('en-US');
-            ctx.fillText("Date: " + today, 200, 535);
-            
-            ctx.beginPath();
-            ctx.moveTo(120, 515);
-            ctx.lineTo(280, 515);
-            ctx.strokeStyle = "#333";
-            ctx.lineWidth = 1;
-            ctx.stroke();
+            let gradeImageSrc = null;
+            if (currentScore >= 8) {
+                gradeImageSrc = "perfect.jpeg";
+            } else if (currentScore >= 5) {
+                gradeImageSrc = "great.jpeg";
+            }
 
-            ctx.fillText("Orkut Help Signature", 600, 535);
-            
-            ctx.beginPath();
-            ctx.moveTo(520, 515);
-            ctx.lineTo(680, 515);
-            ctx.stroke();
+            const drawFooter = () => {
+                ctx.fillStyle = "#333";
+                ctx.font = "16px Arial, sans-serif";
+                const today = new Date().toLocaleDateString('en-US');
+                ctx.fillText("Date: " + today, 200, 700);
+                
+                ctx.beginPath();
+                ctx.moveTo(120, 680);
+                ctx.lineTo(280, 680);
+                ctx.strokeStyle = "#333";
+                ctx.lineWidth = 1;
+                ctx.stroke();
 
-            return canvas.toDataURL("image/png");
+                ctx.fillText("Orkut Help Signature", 600, 700);
+                
+                ctx.beginPath();
+                ctx.moveTo(520, 680);
+                ctx.lineTo(680, 680);
+                ctx.stroke();
+            };
+
+            if (gradeImageSrc) {
+                ctx.fillStyle = "#d82583";
+                ctx.font = "bold 20px Arial, sans-serif";
+                ctx.fillText("Teacher Roberto Mestre Gives You a:", canvas.width / 2, 510);
+
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        ctx.drawImage(img, (canvas.width / 2) - 80, 530, 160, 120);
+                        drawFooter();
+                        resolve(canvas.toDataURL("image/png"));
+                    };
+                    img.src = gradeImageSrc;
+                });
+            } else {
+                drawFooter();
+                return Promise.resolve(canvas.toDataURL("image/png"));
+            }
         }
 
-        function showScore() {
+        async function showScore() {
             questionScreen.style.display = "none";
             scoreScreen.style.display = "block";
             
             const playerName = userNameInput.value.trim() || "Student";
-            generatedImg.src = generateAcademicCertificate(playerName, score, questions.length);
+            generatedImg.src = await generateAcademicCertificate(playerName, score, questions.length);
         }
 
         function restartQuiz() {
