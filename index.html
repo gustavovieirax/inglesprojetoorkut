@@ -4,78 +4,298 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orkut Help CNI - Nostalgia & Quiz</title>
-    <!-- Adicionando a biblioteca QRious para gerar o QR Code -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
-        body { background: linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%); color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        /* --- Estilos Globais --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
         a { text-decoration: none; color: #1155cc; }
         a:hover { text-decoration: underline; }
         ul { list-style: none; }
 
-        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #e8f0f8; display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        .login-box { background: #fff; padding: 35px 25px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 350px; border: 1px solid #b0c4de; }
-        .login-logos { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 25px; }
-        .login-logos img { max-width: 120px; height: auto; object-fit: contain; }
-        .input-group { margin-bottom: 15px; text-align: left; }
-        .input-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; outline: none; transition: border-color 0.3s; }
+        /* --- Tela de Cadastro Minimalista --- */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #e8f0f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: #fff;
+            padding: 35px 25px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 350px;
+            border: 1px solid #b0c4de;
+        }
+
+        .login-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .login-logos img {
+            max-width: 120px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
         .input-group input:focus { border-color: #1155cc; }
-        .login-btn { width: 100%; padding: 12px; background-color: #d82583; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 10px; }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #d82583; 
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
         .login-btn:hover { background-color: #b51c6c; }
-        .login-footer { position: absolute; bottom: 20px; width: 100%; text-align: center; font-size: 12px; color: #666; padding: 0 10px; }
+        
+        /* Rodapé da tela de cadastro */
+        .login-footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            padding: 0 10px;
+        }
 
-        #main-site { display: none; flex: 1; }
+        #main-site { 
+            display: none; 
+            flex: 1; 
+        }
 
-        .top-bar { background-color: #a4c1e4; padding: 2px 10px; font-size: 11px; text-align: right; color: #fff; }
-        header { background-color: #d4e5f7; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #fff; flex-wrap: wrap; }
+        /* --- Header (Menu Superior) --- */
+        .top-bar {
+            background-color: #a4c1e4;
+            padding: 2px 10px;
+            font-size: 11px;
+            text-align: right;
+            color: #fff;
+        }
+
+        header {
+            background-color: #d4e5f7;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #fff;
+            flex-wrap: wrap;
+        }
+
         .logo-nav { display: flex; align-items: center; gap: 15px; }
         .logo-header img { height: 35px; margin-right: 10px; }
         .main-nav { display: flex; gap: 5px; }
-        .main-nav a { background-color: #84b2de; color: white; padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; text-decoration: none; }
-        
+
+        .main-nav a {
+            background-color: #84b2de;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
         .search-bar { display: flex; }
         .search-bar input { padding: 4px; border: 1px solid #ccc; }
         .search-bar button { padding: 4px 8px; background: #fff; border: 1px solid #ccc; cursor: pointer; }
 
-        .container { width: 95%; max-width: 1400px; margin: 15px auto; display: flex; gap: 15px; padding: 0 10px; }
+        /* --- Layout Principal --- */
+        .container {
+            width: 95%; 
+            max-width: 1400px;
+            margin: 15px auto;
+            display: flex;
+            gap: 15px;
+            padding: 0 10px;
+        }
+
         .left-col { width: 20%; }
         .center-col { width: 55%; }
         .right-col { width: 25%; }
-        .box { background: #fff; border: 1px solid #b0c4de; padding: 10px; margin-bottom: 15px; border-radius: 4px; }
+
+        .box {
+            background: #fff;
+            border: 1px solid #b0c4de;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
         .profile-img-container { text-align: center; margin-bottom: 10px; }
         .profile-img-container img { width: 100%; max-width: 150px; border: 1px solid #ccc; padding: 2px; }
+        .upload-btn { display: block; margin-top: 5px; font-size: 11px; }
         .profile-name { font-weight: bold; color: #1155cc; font-size: 14px; }
         .profile-username { font-size: 11px; color: #666; margin-top: 2px; }
+
         .side-menu li { padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 12px; }
         .side-menu li:first-child { background: #6292c6; color: white; padding: 6px; border-radius: 2px; }
         .side-menu li:first-child a { color: white; text-decoration: none;}
 
-        .content-area { background: #fff; padding: 30px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 8px; }
-        .content-title { color: #333; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 25px; font-weight: 400; letter-spacing: 0.5px; }
+        /* --- Quiz Minimalista (Centro) --- */
+        .quiz-container { 
+            background: #fff; 
+            padding: 30px; 
+            border: none; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            border-radius: 8px; 
+        }
+        .quiz-title { 
+            color: #333; 
+            border-bottom: 1px solid #eee; 
+            padding-bottom: 15px; 
+            margin-bottom: 25px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
         .question { font-size: 17px; margin-bottom: 20px; font-weight: 600; color: #222; }
         
-        .options button { display: block; width: 100%; text-align: left; padding: 15px; margin-bottom: 10px; background: #fff; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; font-size: 15px; transition: all 0.2s ease; }
-        .options button:hover:not(:disabled) { border-color: #1155cc; background: #f8fbff; }
-        .options button.correct { background-color: #e8f5e9 !important; border-color: #4caf50 !important; color: #2e7d32; }
-        .options button.incorrect { background-color: #ffebee !important; border-color: #f44336 !important; color: #c62828; }
+        .options button {
+            display: block; width: 100%; text-align: left; padding: 15px;
+            margin-bottom: 10px; background: #fff; border: 1px solid #ddd;
+            border-radius: 6px; cursor: pointer; font-size: 15px;
+            transition: all 0.2s ease;
+        }
+        .options button:hover:not(:disabled) { 
+            border-color: #1155cc; 
+            background: #f8fbff; 
+        }
+        
+        /* Cores de Feedback em Tempo Real */
+        .options button.correct {
+            background-color: #e8f5e9 !important;
+            border-color: #4caf50 !important;
+            color: #2e7d32;
+        }
+        .options button.incorrect {
+            background-color: #ffebee !important;
+            border-color: #f44336 !important;
+            color: #c62828;
+        }
 
         #score-screen { display: none; text-align: center; }
-        #generated-thank-you-img { max-width: 100%; height: auto; border-radius: 4px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+        
+        /* Imagem Gerada no Final */
+        #generated-thank-you-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
 
         .ad-box { text-align: center; font-size: 11px; color: #666; }
         .ad-box img { width: 100%; max-width: 120px; margin: 10px 0; }
-        .site-footer { text-align: center; padding: 20px; font-size: 12px; color: #666; margin-top: auto; }
 
+        /* Rodapé Personalizado (Tela Principal) */
+        .site-footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            margin-top: auto; 
+        }
+
+        /* --- Adaptações Exclusivas para Celular --- */
         @media (max-width: 768px) {
-            .container { flex-direction: column; width: 100%; padding: 5px 15px; }
+            .container { 
+                flex-direction: column; 
+                width: 100%; 
+                padding: 5px 15px; 
+            }
             .left-col, .center-col, .right-col { width: 100%; margin-bottom: 5px; }
-            header { flex-direction: column; align-items: stretch; padding: 15px; }
-            .logo-nav { flex-direction: column; align-items: center; gap: 15px; }
+            
+            header { 
+                flex-direction: column; 
+                align-items: stretch; 
+                padding: 15px; 
+            }
+            .logo-nav { 
+                flex-direction: column; 
+                align-items: center; 
+                gap: 15px; 
+            }
             .logo-header img { margin: 0; }
-            .main-nav { flex-wrap: wrap; justify-content: center; width: 100%; gap: 8px; }
-            .main-nav a { flex: 1 1 30%; text-align: center; padding: 8px 5px; }
-            .search-bar { margin-top: 15px; width: 100%; justify-content: center; }
-            .content-area { padding: 20px 15px; }
+            
+            .main-nav { 
+                flex-wrap: wrap; 
+                justify-content: center; 
+                width: 100%; 
+                gap: 8px; 
+            }
+            .main-nav a { 
+                flex: 1 1 30%;
+                text-align: center; 
+                padding: 8px 5px; 
+            }
+            
+            .search-bar { 
+                margin-top: 15px; 
+                width: 100%; 
+                justify-content: center; 
+            }
+            .search-bar input { width: 70%; padding: 8px; }
+            .search-bar button { padding: 8px 12px; }
+            
+            .top-bar { 
+                text-align: center; 
+                line-height: 1.6; 
+                padding: 8px 5px; 
+            }
+
+            .quiz-container { padding: 20px 15px; }
+            .question { font-size: 16px; }
+            .options button { padding: 12px; font-size: 14px; }
         }
     </style>
 </head>
@@ -87,6 +307,7 @@
                 <img src="orkut.webp" alt="Orkut Logo">
                 <img src="helpcni.jpg" alt="Help CNI Logo">
             </div>
+            
             <form id="register-form">
                 <div class="input-group">
                     <input type="text" id="user-name" placeholder="Seu Nome (Ex: João Silva)" required autocomplete="off">
@@ -97,11 +318,16 @@
                 <button type="submit" class="login-btn">Entrar na Comunidade</button>
             </form>
         </div>
-        <div class="login-footer">Desenvolvido por Gustavo Vieira para apresentação sobre os anos 2000.</div>
+        
+        <div class="login-footer">
+            Desenvolvido por Gustavo Vieira para apresentação sobre os anos 2000.
+        </div>
     </div>
 
     <div id="main-site">
-        <div class="top-bar">Web | Mapas | Notícias | Livros | Tradutor | Gmail | configurações | sair</div>
+        <div class="top-bar">
+            Web | Mapas | Notícias | Livros | Tradutor | Gmail | configurações | sair
+        </div>
 
         <header>
             <div class="logo-nav">
@@ -109,11 +335,12 @@
                     <img src="orkut.webp" alt="Orkut">
                 </div>
                 <nav class="main-nav">
-                    <a href="#" id="nav-quiz">início / quiz</a>
+                    <a href="#">início</a>
                     <a href="#">perfil</a>
                     <a href="#">scraps</a>
                     <a href="#">comunidades</a>
-                    <a href="#" id="nav-verify" style="background-color: #d82583;">verificar certificado</a>
+                    <a href="#">aplicativos</a>
+                    <a href="#">temas</a>
                 </nav>
             </div>
             <div class="search-bar">
@@ -140,13 +367,16 @@
                         <li><a href="#">perfil</a></li>
                         <li><a href="#">lembretes</a></li>
                         <li><a href="#">scraps </a></li>
+                        <li><a href="#">fotos </a></li>
+                        <li><a href="#">vídeos </a></li>
+                        <li><a href="#">depoimentos</a></li>
                     </ul>
                 </div>
             </aside>
 
             <main class="center-col">
-                <div class="content-area" id="quiz-area">
-                    <h2 class="content-title">2000s Nostalgia Quiz</h2>
+                <div class="quiz-container" id="quiz-area">
+                    <h2 class="quiz-title">2000s Nostalgia Quiz</h2>
                     
                     <div id="question-screen">
                         <div class="question" id="question-text">Loading question...</div>
@@ -157,20 +387,8 @@
                     <div id="score-screen">
                         <img id="generated-thank-you-img" alt="Certificate of Achievement">
                         <br>
-                        <button onclick="restartQuiz()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Tentar Novamente</button>
+                        <button onclick="restartQuiz()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Try Again</button>
                     </div>
-                </div>
-
-                <div class="content-area" id="verify-area" style="display: none;">
-                    <h2 class="content-title">Verificação de Autenticidade</h2>
-                    <p style="margin-bottom: 20px; font-size: 14px; line-height: 1.5;">Digite o código de verificação localizado no canto inferior esquerdo do seu certificado para validar sua autenticidade no sistema.</p>
-                    
-                    <div class="input-group">
-                        <input type="text" id="verify-code-input" placeholder="Ex: CNI-A1B2C3" style="padding: 15px; font-size: 16px;">
-                    </div>
-                    <button id="verify-btn" style="padding: 12px 25px; background: #1155cc; color: white; border: none; cursor: pointer; border-radius: 4px; font-size: 14px; font-weight: bold; width: 100%;">Verificar Certificado</button>
-                    
-                    <div id="verify-result" style="margin-top: 25px; font-size: 15px; padding: 15px; border-radius: 4px; display: none;"></div>
                 </div>
             </main>
 
@@ -196,61 +414,37 @@
         const displayUsername = document.getElementById('display-username');
         const userNameInput = document.getElementById('user-name');
 
-        const navQuiz = document.getElementById('nav-quiz');
-        const navVerify = document.getElementById('nav-verify');
-        const quizArea = document.getElementById('quiz-area');
-        const verifyArea = document.getElementById('verify-area');
-        const verifyBtn = document.getElementById('verify-btn');
-        const verifyCodeInput = document.getElementById('verify-code-input');
-        const verifyResult = document.getElementById('verify-result');
-
-        // Alternar abas
-        function showVerifyScreen() {
-            quizArea.style.display = 'none';
-            verifyArea.style.display = 'block';
-        }
-
-        navQuiz.addEventListener('click', (e) => {
-            e.preventDefault();
-            verifyArea.style.display = 'none';
-            quizArea.style.display = 'block';
-        });
-
-        navVerify.addEventListener('click', (e) => {
-            e.preventDefault();
-            showVerifyScreen();
-        });
-
-        // Autenticação (Login falso)
         registerForm.addEventListener('submit', function(event) {
             event.preventDefault(); 
+            
             const nameValue = userNameInput.value.trim();
             const usernameValue = document.getElementById('user-username').value.trim();
 
             if(nameValue && usernameValue) {
                 displayName.textContent = nameValue;
                 displayUsername.textContent = "@" + usernameValue;
+                
                 loginOverlay.style.display = 'none';
                 mainSite.style.display = 'flex'; 
                 mainSite.style.flexDirection = 'column';
             }
         });
 
-        // Checar se existe um código na URL (quando o QR Code é escaneado)
-        window.onload = () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const verifyCode = urlParams.get('verify');
-            
-            if (verifyCode) {
-                loginOverlay.style.display = 'none';
-                mainSite.style.display = 'flex'; 
-                mainSite.style.flexDirection = 'column';
-                showVerifyScreen();
-                
-                verifyCodeInput.value = verifyCode;
-                setTimeout(() => verifyBtn.click(), 500); 
-            }
-        };
+        const imageUpload = document.getElementById('image-upload');
+        const profileImg = document.getElementById('profile-img');
+
+        if (imageUpload && profileImg) {
+            imageUpload.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        profileImg.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
 
         const questions = [
             { question: "What was the golden rule of writing an Orkut Testimonial for a friend?", options: ["Write a highly formal essay.", "Post it, but tell them to delete it so no one else reads it.", "Print it and frame it on the wall.", "Pay a monthly fee to post it."], answer: 1 },
@@ -267,6 +461,7 @@
 
         let currentQuestionIndex = 0;
         let score = 0;
+
         const questionText = document.getElementById("question-text");
         const optionsContainer = document.getElementById("options-container");
         const progressText = document.getElementById("progress-text");
@@ -293,12 +488,14 @@
             const allBtns = optionsContainer.querySelectorAll('button');
             allBtns.forEach(btn => btn.disabled = true);
 
-            if (selectedIndex === questions[currentQuestionIndex].answer) {
+            const correctIndex = questions[currentQuestionIndex].answer;
+
+            if (selectedIndex === correctIndex) {
                 score++;
                 clickedBtn.classList.add('correct');
             } else {
                 clickedBtn.classList.add('incorrect');
-                allBtns[questions[currentQuestionIndex].answer].classList.add('correct');
+                allBtns[correctIndex].classList.add('correct');
             }
 
             setTimeout(() => {
@@ -311,11 +508,7 @@
             }, 1500);
         }
 
-        function generateCertID() {
-            return 'CNI-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-        }
-
-        async function generateAcademicCertificate(name, currentScore, totalQuestions, certId) {
+        async function generateAcademicCertificate(name, currentScore, totalQuestions) {
             const canvas = document.createElement("canvas");
             canvas.width = 800;
             canvas.height = 750;
@@ -323,12 +516,15 @@
 
             ctx.fillStyle = "#fafafa";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+
             ctx.strokeStyle = "#2c3e50";
             ctx.lineWidth = 12;
             ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            
             ctx.strokeStyle = "#d82583";
             ctx.lineWidth = 3;
             ctx.strokeRect(38, 38, canvas.width - 76, canvas.height - 76);
+
             ctx.textAlign = "center";
 
             ctx.fillStyle = "#2c3e50";
@@ -359,14 +555,19 @@
             ctx.font = "bold 20px Arial, sans-serif";
             ctx.fillText("Teacher Roberto Mestre Gives You a:", canvas.width / 2, 510);
 
+            // MUDANÇA: Define a imagem padrão como mestreassinatura.jpeg para as notas 0-4
             let gradeImageSrc = "mestreassinatura.jpeg";
-            if (currentScore >= 8) gradeImageSrc = "perfect.jpeg";
-            else if (currentScore >= 5) gradeImageSrc = "great.jpeg";
+            
+            if (currentScore >= 8) {
+                gradeImageSrc = "perfect.jpeg";
+            } else if (currentScore >= 5) {
+                gradeImageSrc = "great.jpeg";
+            }
 
-            const drawFooterAndQR = () => {
+            const drawFooter = () => {
                 ctx.fillStyle = "#333";
                 ctx.font = "16px Arial, sans-serif";
-                const today = new Date().toLocaleDateString('pt-BR');
+                const today = new Date().toLocaleDateString('en-US');
                 ctx.fillText("Date: " + today, 200, 700);
                 
                 ctx.beginPath();
@@ -377,36 +578,19 @@
                 ctx.stroke();
 
                 ctx.fillText("Orkut Help Signature", 600, 700);
+                
                 ctx.beginPath();
                 ctx.moveTo(520, 680);
                 ctx.lineTo(680, 680);
                 ctx.stroke();
-
-                ctx.textAlign = "left";
-                ctx.fillStyle = "#888";
-                ctx.font = "12px Arial, sans-serif";
-                ctx.fillText(`Verify ID: ${certId}`, 50, 720);
-
-                // GERAÇÃO DO QR CODE
-                const baseUrl = window.location.href.split('?')[0];
-                const verifyUrl = `${baseUrl}?verify=${certId}`;
-                
-                const qr = new QRious({
-                    value: verifyUrl,
-                    size: 90,
-                    level: 'M'
-                });
-
-                const qrImg = new Image();
-                qrImg.src = qr.toDataURL();
-                ctx.drawImage(qrImg, 650, 575, 90, 90);
             };
 
+            // Como todas as faixas de nota possuem uma imagem agora, sempre fazemos o carregamento
             return new Promise((resolve) => {
                 const img = new Image();
                 img.onload = () => {
                     ctx.drawImage(img, (canvas.width / 2) - 80, 530, 160, 120);
-                    drawFooterAndQR();
+                    drawFooter();
                     resolve(canvas.toDataURL("image/png"));
                 };
                 img.src = gradeImageSrc;
@@ -418,17 +602,7 @@
             scoreScreen.style.display = "block";
             
             const playerName = userNameInput.value.trim() || "Student";
-            const certId = generateCertID();
-            const issueDate = new Date().toLocaleDateString('pt-BR');
-            
-            // Aqui é onde os dados são salvos localmente. Para um BD real, você substituiria essa linha por uma chamada à API do seu servidor.
-            localStorage.setItem(certId, JSON.stringify({
-                name: playerName,
-                score: score,
-                date: issueDate
-            }));
-
-            generatedImg.src = await generateAcademicCertificate(playerName, score, questions.length, certId);
+            generatedImg.src = await generateAcademicCertificate(playerName, score, questions.length);
         }
 
         function restartQuiz() {
@@ -438,34 +612,6 @@
             scoreScreen.style.display = "none";
             loadQuestion();
         }
-
-        verifyBtn.addEventListener('click', () => {
-            const code = verifyCodeInput.value.trim().toUpperCase();
-            if(!code) return;
-
-            // Busca os dados (Atualmente simulado com localStorage)
-            const record = localStorage.getItem(code);
-            verifyResult.style.display = 'block';
-            
-            if (record) {
-                const data = JSON.parse(record);
-                verifyResult.style.backgroundColor = "#e8f5e9";
-                verifyResult.style.border = "1px solid #4caf50";
-                verifyResult.style.color = "#2e7d32";
-                verifyResult.innerHTML = `
-                    <strong>✅ Certificado Autêntico!</strong><br><br>
-                    <strong>Código:</strong> ${code}<br>
-                    <strong>Aluno(a):</strong> ${data.name}<br>
-                    <strong>Nota:</strong> ${data.score} / 10<br>
-                    <strong>Data de Emissão:</strong> ${data.date}
-                `;
-            } else {
-                verifyResult.style.backgroundColor = "#ffebee";
-                verifyResult.style.border = "1px solid #f44336";
-                verifyResult.style.color = "#c62828";
-                verifyResult.innerHTML = "<strong>❌ Certificado não encontrado.</strong> Verifique se digitou o código corretamente.";
-            }
-        });
 
         loadQuestion();
     </script>
