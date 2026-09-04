@@ -19,9 +19,7 @@
         }
 
         body {
-            background: linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%) !important;
-            background-size: cover !important;
-            background-attachment: fixed !important;
+            background: linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%);
             color: #333 !important;
             min-height: 100vh;
             display: flex;
@@ -559,7 +557,6 @@
             }
         });
 
-        // Alternar entre Seções (Quiz, Pacman e Temas)
         function showSection(section) {
             const quizArea = document.getElementById('quiz-area');
             const pacmanArea = document.getElementById('pacman-area');
@@ -579,14 +576,18 @@
             }
         }
 
-        // --- Funções de Troca de Tema ---
+        // Função corrigida para alterar o fundo de forma dinâmica
         function setTheme(imagePath) {
-            document.body.style.background = `url('${imagePath}') no-repeat center center fixed !important`;
-            document.body.style.backgroundSize = "cover !important";
+            document.body.style.backgroundImage = `url('${imagePath}')`;
+            document.body.style.backgroundRepeat = "no-repeat";
+            document.body.style.backgroundPosition = "center center";
+            document.body.style.backgroundAttachment = "fixed";
+            document.body.style.backgroundSize = "cover";
         }
 
         function resetTheme() {
-            document.body.style.background = "linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%) !important";
+            document.body.style.backgroundImage = "none";
+            document.body.style.background = "linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%)";
         }
 
         // --- Perguntas do Quiz ---
@@ -760,7 +761,7 @@
 
         loadQuestion();
 
-        // --- Lógica do Minijogo (Pop Pacman: Taylor vs Kanye com Links da Internet) ---
+        // --- Lógica do Minijogo (Pop Pacman) ---
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const gameScoreText = document.getElementById("game-score");
