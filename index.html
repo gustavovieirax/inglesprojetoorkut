@@ -20,10 +20,13 @@
 
         body {
             background: linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%) !important;
+            background-size: cover !important;
+            background-attachment: fixed !important;
             color: #333 !important;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: background 0.4s ease;
         }
 
         a { text-decoration: none; color: #1155cc; }
@@ -190,7 +193,7 @@
         .side-menu li a { color: #1155cc; text-decoration: none; display: block; }
         .side-menu li:first-child a { color: white; }
 
-        /* --- Quiz & Conteúdo Central --- */
+        /* --- Quiz, Conteúdo Central & Seção de Temas --- */
         .quiz-container { 
             background: #fff; 
             padding: 30px; 
@@ -236,7 +239,55 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
 
-        /* --- Estilos do Pop Pacman (Minijogo Otimizado para Celular) --- */
+        /* --- Seção de Seleção de Temas --- */
+        #themes-area {
+            display: none;
+        }
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .theme-card {
+            border: 2px solid #b0c4de;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #f8fbff;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .theme-card:hover {
+            transform: scale(1.02);
+            border-color: #d82583;
+        }
+        .theme-card img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            display: block;
+        }
+        .theme-card span {
+            display: block;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #333;
+        }
+        .reset-theme-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #6292c6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .reset-theme-btn:hover { background-color: #4a75a2; }
+
+        /* --- Estilos do Pop Pacman (Minijogo) --- */
         #pacman-area {
             display: none;
             text-align: center;
@@ -323,6 +374,7 @@
             .quiz-container { padding: 20px 15px; }
             .question { font-size: 16px; }
             .options button { padding: 12px; font-size: 14px; }
+            .themes-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -367,7 +419,7 @@
                     <a href="#" onclick="showSection('pacman')">pop pacman</a>
                     <a href="#">comunidades</a>
                     <a href="#">aplicativos</a>
-                    <a href="#">temas</a>
+                    <a href="#" onclick="showSection('themes')">temas</a>
                 </nav>
             </div>
             <div class="search-bar">
@@ -417,6 +469,30 @@
                         <br>
                         <button onclick="restartQuiz()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Try Again</button>
                     </div>
+                </div>
+
+                <!-- Seção de Temas (Escolha de Cidades) -->
+                <div class="quiz-container" id="themes-area">
+                    <h2 class="quiz-title">Escolha o Tema de Fundo do Site</h2>
+                    <div class="themes-grid">
+                        <div class="theme-card" onclick="setTheme('riodejaneiro.jpg')">
+                            <img src="riodejaneiro.jpg" alt="Rio de Janeiro">
+                            <span>Rio de Janeiro</span>
+                        </div>
+                        <div class="theme-card" onclick="setTheme('novaiorque.jpg')">
+                            <img src="novaiorque.jpg" alt="Nova York">
+                            <span>Nova York</span>
+                        </div>
+                        <div class="theme-card" onclick="setTheme('londres.jpg')">
+                            <img src="londres.jpg" alt="Londres">
+                            <span>Londres</span>
+                        </div>
+                        <div class="theme-card" onclick="setTheme('liberdade.jpg')">
+                            <img src="liberdade.jpg" alt="Bairro da Liberdade">
+                            <span>Bairro da Liberdade</span>
+                        </div>
+                    </div>
+                    <button class="reset-theme-btn" onclick="resetTheme()">Restaurar Tema Original (Orkut)</button>
                 </div>
 
                 <!-- Seção do Pop Pacman (Taylor vs Kanye) -->
@@ -483,18 +559,34 @@
             }
         });
 
-        // Alternar entre Quiz e Pacman
+        // Alternar entre Seções (Quiz, Pacman e Temas)
         function showSection(section) {
             const quizArea = document.getElementById('quiz-area');
             const pacmanArea = document.getElementById('pacman-area');
+            const themesArea = document.getElementById('themes-area');
+
+            quizArea.style.display = 'none';
+            pacmanArea.style.display = 'none';
+            themesArea.style.display = 'none';
+            stopGame();
+
             if(section === 'quiz') {
                 quizArea.style.display = 'block';
-                pacmanArea.style.display = 'none';
-                stopGame();
             } else if(section === 'pacman') {
-                quizArea.style.display = 'none';
                 pacmanArea.style.display = 'block';
+            } else if(section === 'themes') {
+                themesArea.style.display = 'block';
             }
+        }
+
+        // --- Funções de Troca de Tema ---
+        function setTheme(imagePath) {
+            document.body.style.background = `url('${imagePath}') no-repeat center center fixed !important`;
+            document.body.style.backgroundSize = "cover !important";
+        }
+
+        function resetTheme() {
+            document.body.style.background = "linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%) !important";
         }
 
         // --- Perguntas do Quiz ---
@@ -668,7 +760,7 @@
 
         loadQuestion();
 
-        // --- Lógica do Minijogo (Pop Pacman: Taylor vs Kanye) ---
+        // --- Lógica do Minijogo (Pop Pacman: Taylor vs Kanye com Links da Internet) ---
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const gameScoreText = document.getElementById("game-score");
@@ -682,18 +774,18 @@
         let kanye = { x: 280, y: 180, size: 32, speed: 1.2 };
         let star = { x: Math.random() * 300 + 30, y: Math.random() * 200 + 30, size: 14 };
 
-        // Carregamento dos arquivos locais com tratamento de falha (fallback seguro)
         const taylorImg = new Image();
-        taylorImg.src = "taylorswift.jpg";
+        taylorImg.crossOrigin = "anonymous";
+        taylorImg.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150";
         let taylorLoaded = false;
         taylorImg.onload = () => { taylorLoaded = true; };
 
         const kanyeImg = new Image();
-        kanyeImg.src = "kanye.jpg";
+        kanyeImg.crossOrigin = "anonymous";
+        kanyeImg.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150";
         let kanyeLoaded = false;
         kanyeImg.onload = () => { kanyeLoaded = true; };
 
-        // Controles de Teclado (PC)
         window.addEventListener('keydown', function(e) {
             if (!gameRunning) return;
             if (e.key === 'ArrowUp') { taylor.dx = 0; taylor.dy = -taylor.speed; }
@@ -702,7 +794,6 @@
             if (e.key === 'ArrowRight') { taylor.dx = taylor.speed; taylor.dy = 0; }
         });
 
-        // Controles táteis (Celular)
         function movePlayer(dir) {
             if (!gameRunning) return;
             if (dir === 'UP') { taylor.dx = 0; taylor.dy = -taylor.speed; }
@@ -741,19 +832,16 @@
             taylor.x += taylor.dx;
             taylor.y += taylor.dy;
 
-            // Limites da Tela
             if (taylor.x < 0) taylor.x = 0;
             if (taylor.x > canvas.width - taylor.size) taylor.x = canvas.width - taylor.size;
             if (taylor.y < 0) taylor.y = 0;
             if (taylor.y > canvas.height - taylor.size) taylor.y = canvas.height - taylor.size;
 
-            // Perseguição do Kanye
             if (kanye.x < taylor.x) kanye.x += kanye.speed;
             if (kanye.x > taylor.x) kanye.x -= kanye.speed;
             if (kanye.y < taylor.y) kanye.y += kanye.speed;
             if (kanye.y > taylor.y) kanye.y -= kanye.speed;
 
-            // Colisão com o prêmio/estrela
             let distStar = Math.hypot((taylor.x + taylor.size/2) - (star.x + star.size/2), (taylor.y + taylor.size/2) - (star.y + star.size/2));
             if (distStar < taylor.size/2 + star.size/2) {
                 gameScore += 10;
@@ -762,7 +850,6 @@
                 star.y = Math.random() * (canvas.height - 40) + 20;
             }
 
-            // Colisão com o Kanye (Game Over)
             let distKanye = Math.hypot((taylor.x + taylor.size/2) - (kanye.x + kanye.size/2), (taylor.y + taylor.size/2) - (kanye.y + kanye.size/2));
             if (distKanye < taylor.size * 0.7) {
                 alert("Game Over! O Kanye te pegou! Pontuação final: " + gameScore);
@@ -777,13 +864,11 @@
             ctx.fillStyle = "#111";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Desenhar Estrela
             ctx.fillStyle = "#f1c40f";
             ctx.beginPath();
             ctx.arc(star.x, star.y, star.size/2, 0, Math.PI * 2);
             ctx.fill();
 
-            // Desenhar Taylor (Player)
             ctx.save();
             ctx.beginPath();
             ctx.arc(taylor.x + taylor.size/2, taylor.y + taylor.size/2, taylor.size/2, 0, Math.PI * 2);
@@ -796,7 +881,6 @@
             }
             ctx.restore();
 
-            // Desenhar Kanye (Fantasma)
             ctx.save();
             ctx.beginPath();
             ctx.arc(kanye.x + kanye.size/2, kanye.y + kanye.size/2, kanye.size/2, 0, Math.PI * 2);
