@@ -576,7 +576,6 @@
             }
         }
 
-        // Função corrigida para alterar o fundo de forma dinâmica
         function setTheme(imagePath) {
             document.body.style.backgroundImage = `url('${imagePath}')`;
             document.body.style.backgroundRepeat = "no-repeat";
@@ -761,7 +760,7 @@
 
         loadQuestion();
 
-        // --- Lógica do Minijogo (Pop Pacman) ---
+        // --- Lógica do Minijogo (Pop Pacman puxando da pasta local) ---
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const gameScoreText = document.getElementById("game-score");
@@ -776,14 +775,12 @@
         let star = { x: Math.random() * 300 + 30, y: Math.random() * 200 + 30, size: 14 };
 
         const taylorImg = new Image();
-        taylorImg.crossOrigin = "anonymous";
-        taylorImg.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150";
+        taylorImg.src = "taylorswift.jpg";
         let taylorLoaded = false;
         taylorImg.onload = () => { taylorLoaded = true; };
 
         const kanyeImg = new Image();
-        kanyeImg.crossOrigin = "anonymous";
-        kanyeImg.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150";
+        kanyeImg.src = "kanye.jpg";
         let kanyeLoaded = false;
         kanyeImg.onload = () => { kanyeLoaded = true; };
 
@@ -870,6 +867,7 @@
             ctx.arc(star.x, star.y, star.size/2, 0, Math.PI * 2);
             ctx.fill();
 
+            // Desenhar Taylor (Puxando de taylorswift.jpg da pasta)
             ctx.save();
             ctx.beginPath();
             ctx.arc(taylor.x + taylor.size/2, taylor.y + taylor.size/2, taylor.size/2, 0, Math.PI * 2);
@@ -882,6 +880,7 @@
             }
             ctx.restore();
 
+            // Desenhar Kanye (Puxando de kanye.jpg da pasta)
             ctx.save();
             ctx.beginPath();
             ctx.arc(kanye.x + kanye.size/2, kanye.y + kanye.size/2, kanye.size/2, 0, Math.PI * 2);
