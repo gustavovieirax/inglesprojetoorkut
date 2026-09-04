@@ -419,7 +419,7 @@
                     </div>
                 </div>
 
-                <!-- Seção do Pop Pacman (Taylor vs Kanye Embutido) -->
+                <!-- Seção do Pop Pacman (Taylor vs Kanye) -->
                 <div class="quiz-container" id="pacman-area">
                     <h2 class="quiz-title">Pop Pacman: Taylor vs Kanye</h2>
                     
@@ -668,7 +668,7 @@
 
         loadQuestion();
 
-        // --- Lógica do Minijogo (Pop Pacman: Taylor vs Kanye com imagens embutidas) ---
+        // --- Lógica do Minijogo (Pop Pacman: Taylor vs Kanye) ---
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const gameScoreText = document.getElementById("game-score");
@@ -682,12 +682,16 @@
         let kanye = { x: 280, y: 180, size: 32, speed: 1.2 };
         let star = { x: Math.random() * 300 + 30, y: Math.random() * 200 + 30, size: 14 };
 
-        // Imagens incorporadas diretamente em Base64 para evitar bloqueio do navegador
+        // Carregamento dos arquivos locais com tratamento de falha (fallback seguro)
         const taylorImg = new Image();
-        taylorImg.src = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxITEhUSExIVFRUXFx0YFRgWGBcYFRgXGBgYGBUXFxgYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGi0lHSUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAFAAIDBAYBBwj/xABAEAACAQIEAwUECAUDAwUFAAABAhEAAwQSITEFQQYiUXETMgcUImGBkaEUM1JicsHwFUKCsdHh8VOCFiQ0U9P/xAAaAQADAQEBAQAAAAAAAAAAAAABAgMABAUG/8QANBEAAgEDAwMCBQIGAwEAAAAAAAECAxEEEiExBFEiEzJhcRShgaEyscHUI0LR8PFSFfGC/9oADAMBAAIRAxEAPwD2e2W0C1XUKhZ7oChmC79M7LgN4T6bU+hgt98T03L8Mv5Sslj0i8K7a0j4Yn65b5SszDpl0P8ALn/8rL+UrXhUvK2VjK83qC8W9p3W00sHUsXn20XWbV7y2i4193gAnTwnp3t3b3C6F7K6K6rVl6k0p9Hj0i8D28nN5DtfWJ8L262m9vV7r+t6s1y8d/t7hL317l6l25wN5t9uHqP2VwP6kX0/o7n7WkL0d6B95XG2c7N3d+w+2fUu/WjF+nO22x1K4fUuPvv3S51+Nf8AtCtfZ+uL5b8H8+m2v8AvG++6mH6i8nK0w3n192nL8m3M/vH/2wXNuv7v2f8Axt9tcfefvA22i87t+/2n9K4fUuHvv3Q3R3W677a2u03h8L28/8Arj4H1h+rf8AfWb29vub3n7xN9ts8X195+n8p68b8/0Lh9S4fW3uL67r7bO1/Vv7e5/0Lh9S4j6t9r4/VtfZuj589v8/wB3v7fV1+nO1vvtP/7a4r9b+9e7/bfbXGf/wA0n5SszHpj0P8ALn/8rL+UrXhUvK2VjK83qC8V9p3W00sHUsXn20XWbV7y2i4193gAnTwnp3t3b3C6F7K6K6rVl6k0p9Hj0i8D28nN5DtfWJ8L262m9vV7r+t6s1y8d/t7hL317l6l25wN5t9uHqP2VwP6kX0/o7n7WkL0d6B95XG2c7N3d+w+2fUu/WjF+nO22x1K4fUuPvv3S51+Nf8AtCtfZ+uL5b8H8+m2v8AvG++6mH6i8nK0w3n192nL8m3M/vH/2wXNuv7v2f8Axt9tcfefvA22i87t+/2n9K4fUuHvv3Q3R3W677a2u03h8L28/8Arj4H1h+rf8AfWb29vub3n7xN9ts8X195+n8p68b8/0Lh9S4fW3uL67r7bO1/Vv7e5/0Lh9S4j6t9r4/VtfZuj589v8/wB3v7fV1+nO1vvtP/7a4r9b+9e7/bfbXGf/wA0n5SszHpj0P8ALn/8rL+UrXhUvK2VjK83qC8V9p3W00sHUsXn20XWbV7y2i4193gAnTwnp3t3b3C6F7K6K6rVl6k0p9Hj0i8D28nN5DtfWJ8L262m9vV7r+t6s1y8d/t7hL317l6l25wN5t9uHqP2VwP6kX0/o7n7WkL0d6B95XG2c7N3d+w+2fUu/WjF+nO22x1K4fUuPvv3S51+Nf8AtCtfZ+uL5b8H8+m2v8AvG++6mH6i8nK0w3n192nL8m3M/vH/2wXNuv7v2f8Axt9tcfefvA22i87t+/2n9K4fUuHvv3Q3R3W677a2u03h8L28/8Arj4H1h+rf8AfWb29vub3n7xN9ts8X195+n8p68b8/0Lh9S4fW3uL67r7bO1/Vv7e5/0Lh9S4j6t9r4/VtfZuj589v8/wB3v7fV1+nO1vvtP/7a4r9b+9e7/bfbXGf/wA0n5SszHpj0P8ALn/8rL+UrXhUvK2VjK83qC8V9p3W00sHUsXn20XWbV7y2i4193gAnTwnp3t3b3C6F7K6K6rVl6k0p9Hj0i8D28nN5DtfWJ8L262m9vV7r+t6s1y8d/t7hL317l6l25wN5t9uHqP2VwP6kX0/o7n7WkL0d6B95XG2c7N3d+w+2fUu/WjF+nO22x1K4fUuPvv3S51+Nf8AtCtfZ+uL5b8H8+m2v8AvG++6mH6i8nK0w3n192nL8m3M/vH/2wXNuv7v2f8Axt9tcfefvA22i87t+/2n9K4fUuHvv3Q3R3W677a2u03h8L28/8Arj4H1h+rf8AfWb29vub3n7xN9ts8X195+n8p68b8/0Lh9S4fW3uL67r7bO1/Vv7e5/0Lh9S4j6t9r4/VtfZuj589v8/wB3v7fV1+nO1vvtP/7a4r9b+9e7/bfbXGf/wA0n5SszHpj0P8ALn/8rL+UrXhUvK2VjK83qC8V9p3W00sHUsXn20XWbV7y2i4193gAnTwnp3t3b3C6F7K6K6rVl6k0p9Hj0i8D28nN5DtfWJ8L262m9vV7r+t6s1y8d/t7hL317l6l25wN5t9uHqP2VwP6kX0/o7n7WkL0d6B95XG2c7N3d+w+2fUu/WjF+nO22x1K4fUuPvv3S51+Nf8AtCtfZ+uL5b8H8+m2v8AvG++6mH6i8nK0w3n192nL8m3M/vH/2wXNuv7v2f8Axt9tcfefvA22i87t+/2n9K4fUuHvv3Q3R3W677a2u03h8L28/8Arj4H1h+rf8AfWb29vub3n7xN9ts8X195+n8p68b8/0Lh9S4fW3uL67r7bO1/Vv7e5/0Lh9S4j6t9r4/VtfZuj589v8/wB3v7fV1+nO1vvtP/7a4r9b+9e7/bfbXGf/wA0n5SszHpj0P8ALn/8rL+UrXhUvK2VjK83qC8V9p3W00sHUsXn20XWbV7y2i4193gAnTwnp3t3b3C6F7K6K6rVl6k0p9Hj0i8D28nN5DtfWJ8L262m9vV7r+t6s1y8d/t7hL317l6l25wN5t9uHqP2VwP6kX0/o7n7WkL0d6B95XG2c7N3d+w+2fUu/WjF+nO22x1K4fUuPvv3S51+Nf8AtCtfZ+uL5b8H8+m2v8AvG++6mH6i8nK0w3n192nL8m3M/vH/2wXNuv7v2f8Axt9tcfefvA22i87t+/2n9K4fUuHvv3Q3R3W677a2u03h8L28/8Arj4H1h+rf8AfWb29vub3n7xN9ts8X195+n8p68b8/0Lh9S4fW3uL67r7bO1/Vv7e5/0Lh9S4j6t9r4/VtfZuj589v8/wB3v7fV1+nO1vvtP/7a4r9b+9e7/bfbXGf/wA0n5SszHpj0P8ALn/8rL+UrXhUvK2VjK83qC8V9p3W00sHUsXn20XWbV7y2i4193gAnTwnp3t3b3C6F7K6K6rVl6k0p9Hj0i8D28nN5DtfWJ8L262m9vV7r+t6s1y8d/t7hL317l6l25wN5t9uHqP2VwP6kX0/o7n7WkL0d6B95XG2c7N3d+w+2fUu/WjF+nO22x1K4fUuPvv3S51+Nf8AtCtfZ+uL5b8H8+m2v8AvG++6mH6i8nK0w3n192nL8m3M/vH/2wXNuv7v2f8Axt9tcfefvA22i87t+/2n9K4fUuHvv3Q3R3W677a2u03h8L28/8Arj4H1h+rf8AfWb29vub3n7xN9ts8X195+n8p68b8/0Lh9S4fW3uL67r7bO1/Vv7e5/0Lh9S4j6t9r4/VtfZuj589v8/wB3v7fV1+nO1vvtP/7a4r9b+9e7/bfbXGf/wA0n5SszHpj0P8ALn/8rL+UrXhUvK2VjK83qC8F8b6n+5uO3n12zG3aY8n+/uL6O+5p0L5s4bTfd/1X2cfsfvZ9YvP7n7t9X+kfv+w+/61/W79d39+3O2vF/qP6f+25t9c+lvu5bteu16ev8AfLdZ9v8AVfU6/o6P4b4j6l487XufX/L3X67v8A318eO4vP6t/L6P+X39+fO4a/b+d/8AfZ9b91t9p3u3uP3XWv12v11X9bt66f+5df1r9r/vW2r3vW8d18d9r63/v1l2v2t//Z";
+        taylorImg.src = "taylorswift.jpg";
+        let taylorLoaded = false;
+        taylorImg.onload = () => { taylorLoaded = true; };
 
         const kanyeImg = new Image();
-        kanyeImg.src = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxITEhUSExIVFRUXFx0YFRgWGBcYFRgXGBgYGBUXFxgYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGi0lHSUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4AMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAFAAIDBAYBBwj/xABBEAACAQIEAwUECAUDAwUFAAABAhEAAwQSITEFQQYiUXETMgcUImGBkaEUM1JicsHwFUKCsdHh8VOCFiQ0U9P/xAAaAQADAQEBAQAAAAAAAAAAAAABAgMABAUG/8QANBEAAgEDAwMCBQIGAwEAAAAAAAECAxEEEiExBFEiEzJhcRShgaEyscHUI0LR8PFSFfGC/9oADAMBAAIRAxEAPwDYv9Y5v8vQ+g1w0Gf2pC17R02jC5Y9L3W0Xm4i6rL7O0zS9w7Y9uLgP2aJ4g3Y2W1uQxH4k2g8zH6OqG2Mmxz7x4qC+n26hA663e2u0ZJzS7fbs3qL+yLlu8m1t8hFtt23Nn/tEAn9oPtvYJ7z83K0/2a133U/n6d+kE2v3F9634O7uWc9bN9V4X6O3uWl9v6e1H+X9wbf/vO2x2+X9O+/t9L3WvG/8ACp89N3+P136B0a/5v8Av7v0uv5v7uv8Xv77/q29J2vW3t7a/8Anv9rfb5e//Z";
+        kanyeImg.src = "kanye.jpg";
+        let kanyeLoaded = false;
+        kanyeImg.onload = () => { kanyeLoaded = true; };
 
         // Controles de Teclado (PC)
         window.addEventListener('keydown', function(e) {
@@ -779,20 +783,30 @@
             ctx.arc(star.x, star.y, star.size/2, 0, Math.PI * 2);
             ctx.fill();
 
-            // Desenhar Taylor (Player) com a foto embutida
+            // Desenhar Taylor (Player)
             ctx.save();
             ctx.beginPath();
             ctx.arc(taylor.x + taylor.size/2, taylor.y + taylor.size/2, taylor.size/2, 0, Math.PI * 2);
             ctx.clip();
-            ctx.drawImage(taylorImg, taylor.x, taylor.y, taylor.size, taylor.size);
+            if (taylorLoaded) {
+                ctx.drawImage(taylorImg, taylor.x, taylor.y, taylor.size, taylor.size);
+            } else {
+                ctx.fillStyle = "#ff69b4";
+                ctx.fillRect(taylor.x, taylor.y, taylor.size, taylor.size);
+            }
             ctx.restore();
 
-            // Desenhar Kanye (Fantasma) com a foto embutida
+            // Desenhar Kanye (Fantasma)
             ctx.save();
             ctx.beginPath();
             ctx.arc(kanye.x + kanye.size/2, kanye.y + kanye.size/2, kanye.size/2, 0, Math.PI * 2);
             ctx.clip();
-            ctx.drawImage(kanyeImg, kanye.x, kanye.y, kanye.size, kanye.size);
+            if (kanyeLoaded) {
+                ctx.drawImage(kanyeImg, kanye.x, kanye.y, kanye.size, kanye.size);
+            } else {
+                ctx.fillStyle = "#34495e";
+                ctx.fillRect(kanye.x, kanye.y, kanye.size, kanye.size);
+            }
             ctx.restore();
         }
     </script>
