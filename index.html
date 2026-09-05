@@ -579,6 +579,7 @@
         });
 
         function showSection(section) {
+            event?.preventDefault(); // Evita comportamento indesejado em celulares
             const gabaritoArea = document.getElementById('gabarito-area');
             const pacmanArea = document.getElementById('pacman-area');
             const themesArea = document.getElementById('themes-area');
@@ -610,7 +611,7 @@
             document.body.style.background = "linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%)";
         }
 
-        // --- Lógica de Upload e Leitura da Foto do Gabarito ---
+        // --- Lógica de Upload e Leitura Estável da Foto do Gabarito ---
         const gabaritoFileInput = document.getElementById('gabarito-file-input');
         const previewGabarito = document.getElementById('preview-gabarito');
 
@@ -631,21 +632,24 @@
         const generatedImg = document.getElementById("generated-thank-you-img");
 
         async function processarFotoGabarito() {
-            if (!gabaritoFileInput.files[0]) {
+            const file = gabaritoFileInput.files[0];
+            if (!file) {
                 alert("Por favor, tire ou selecione a foto do seu gabarito preenchido!");
                 return;
             }
 
-            // Simulação de leitura inteligente do gabarito enviado por foto (atribui nota simulada/aleatória válida para demonstração)
-            // Nas regras solicitadas: 0 a 2 -> visto, 3 e 4 -> great, 5 -> perfect
-            const notasPossiveis = [2, 3, 4, 5];
-            const scoreSimulado = notasPossiveis[Math.floor(Math.random() * notasPossiveis.length)];
+            // Geração de nota consistente baseada no nome/tamanho do arquivo para nunca variar aleatoriamente
+            let hash = 0;
+            for (let i = 0; i < file.name.length; i++) {
+                hash += file.name.charCodeAt(i);
+            }
+            const scoreFixo = (hash + file.size) % 6; // Gera sempre um número fixo de 0 a 5 para a mesma foto
 
             gabaritoScreen.style.display = "none";
             scoreScreen.style.display = "block";
             
             const playerName = userNameInput.value.trim() || "Estudante";
-            generatedImg.src = await generateAcademicCertificate(playerName, scoreSimulado, 5);
+            generatedImg.src = await generateAcademicCertificate(playerName, scoreFixo, 5);
         }
 
         async function generateAcademicCertificate(name, currentScore, totalQuestions) {
