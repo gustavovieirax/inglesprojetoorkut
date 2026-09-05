@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orkut Help CNI - Nostalgia & Quiz</title>
+    <title>Orkut Help CNI - Nostalgia Total</title>
     <style>
         /* --- Forçar Modo Claro Global --- */
         :root {
@@ -31,7 +31,7 @@
         a:hover { text-decoration: underline; }
         ul { list-style: none; }
 
-        /* --- Tela de Cadastro Minimalista --- */
+        /* --- Tela de Cadastro --- */
         #login-overlay {
             position: fixed;
             top: 0;
@@ -120,7 +120,7 @@
             flex: 1; 
         }
 
-        /* --- Header (Menu Superior) --- */
+        /* --- Header --- */
         .top-bar {
             background-color: #a4c1e4;
             padding: 2px 10px;
@@ -186,18 +186,60 @@
         .profile-name { font-weight: bold; color: #1155cc; font-size: 14px; }
         .profile-username { font-size: 11px; color: #666; margin-top: 2px; }
 
+        /* --- ÍCONES CLÁSSICOS DO ORKUT --- */
+        .orkut-status {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+            text-align: left;
+            font-size: 12px;
+            color: #1155cc;
+        }
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .icons span {
+            font-size: 16px;
+            opacity: 0.2; 
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            display: inline-block;
+            user-select: none;
+        }
+        .icons span.active {
+            opacity: 1; 
+        }
+        .icons span:hover {
+            transform: scale(1.3);
+        }
+
         .side-menu li { padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 12px; cursor: pointer; }
         .side-menu li:first-child { background: #6292c6; color: white; padding: 6px; border-radius: 2px; }
         .side-menu li a { color: #1155cc; text-decoration: none; display: block; }
         .side-menu li:first-child a { color: white; }
 
-        /* --- Quiz, Conteúdo Central & Seção de Temas --- */
+        /* --- Sorte de Hoje --- */
+        .sorte-hoje-box {
+            background-color: #fff9d7;
+            border: 1px solid #e2c822;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        /* --- Container do Quiz Original --- */
         .quiz-container { 
             background: #fff; 
             padding: 30px; 
             border: none; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
             border-radius: 8px; 
+            text-align: left;
         }
         .quiz-title { 
             color: #333; 
@@ -216,6 +258,10 @@
             color: #333;
             transition: all 0.2s ease;
         }
+        .options button:hover:not(:disabled) { 
+            border-color: #1155cc; 
+            background: #f8fbff; 
+        }
         .options button.correct {
             background-color: #e8f5e9 !important;
             border-color: #4caf50 !important;
@@ -228,150 +274,75 @@
         }
 
         #score-screen { display: none; text-align: center; }
-        
         #generated-thank-you-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin: 20px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            max-width: 100%; height: auto; border-radius: 4px;
+            margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
 
-        /* --- Seção de Seleção de Temas --- */
-        #themes-area {
-            display: none;
-        }
-        .themes-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        .theme-card {
-            border: 2px solid #b0c4de;
-            border-radius: 6px;
-            overflow: hidden;
-            cursor: pointer;
+        /* --- Scraps --- */
+        #scraps-area { display: none; text-align: left; }
+        .scrap-item {
             background: #f8fbff;
-            text-align: center;
-            transition: transform 0.2s, border-color 0.2s;
+            border: 1px solid #b0c4de;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
         }
-        .theme-card:hover {
-            transform: scale(1.02);
-            border-color: #d82583;
+        .scrap-item img {
+            max-width: 150px;
+            border-radius: 4px;
         }
-        .theme-card img {
-            width: 100%;
-            height: 110px;
-            object-fit: cover;
-            display: block;
-        }
-        .theme-card span {
-            display: block;
-            padding: 8px;
-            font-size: 13px;
-            font-weight: bold;
+        .scrap-item p {
+            font-size: 14px;
             color: #333;
         }
+
+        /* --- Temas --- */
+        #themes-area { display: none; }
+        .themes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .theme-card {
+            border: 2px solid #b0c4de; border-radius: 6px; overflow: hidden;
+            cursor: pointer; background: #f8fbff; text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .theme-card:hover { transform: scale(1.02); border-color: #d82583; }
+        .theme-card img { width: 100%; height: 110px; object-fit: cover; display: block; }
+        .theme-card span { display: block; padding: 8px; font-size: 13px; font-weight: bold; color: #333; }
         .reset-theme-btn {
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px;
-            background-color: #6292c6;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .reset-theme-btn:hover { background-color: #4a75a2; }
-
-        /* --- Estilos do Pop Pacman (Minijogo) --- */
-        #pacman-area {
-            display: none;
-            text-align: center;
+            margin-top: 20px; width: 100%; padding: 10px; background-color: #6292c6;
+            color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;
         }
 
+        /* --- Pacman --- */
+        #pacman-area { display: none; text-align: center; }
         #gameCanvas {
-            background: #111;
-            border: 4px solid #333;
-            border-radius: 6px;
-            display: block;
-            margin: 0 auto 10px auto;
-            max-width: 100%;
-            touch-action: none;
+            background: #111; border: 4px solid #333; border-radius: 6px;
+            display: block; margin: 0 auto 10px auto; max-width: 100%; touch-action: none;
         }
-
-        .game-controls-info {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        /* Controles Virtuais para Celular */
-        .mobile-dpad {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            margin: 10px 0 15px 0;
-        }
-
-        .dpad-row {
-            display: flex;
-            gap: 40px;
-        }
-
+        .mobile-dpad { display: flex; flex-direction: column; align-items: center; gap: 5px; margin: 10px 0 15px 0; }
+        .dpad-row { display: flex; gap: 40px; }
         .dpad-btn {
-            width: 55px;
-            height: 50px;
-            background-color: #84b2de;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-            outline: none;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        .dpad-btn:active {
-            background-color: #6292c6;
-            transform: scale(0.95);
+            width: 55px; height: 50px; background-color: #84b2de; color: white;
+            border: none; border-radius: 8px; font-size: 20px; font-weight: bold;
+            cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.15); user-select: none;
         }
 
         .ad-box { text-align: center; font-size: 11px; color: #666; }
         .ad-box img { width: 100%; max-width: 120px; margin: 10px 0; }
-
-        .site-footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: #666;
-            margin-top: auto; 
-        }
+        .site-footer { text-align: center; padding: 20px; font-size: 12px; color: #666; margin-top: auto; }
 
         @media (max-width: 768px) {
-            .container { 
-                flex-direction: column; 
-                width: 100%; 
-                padding: 5px 15px; 
-            }
+            .container { flex-direction: column; width: 100%; padding: 5px 15px; }
             .left-col, .center-col, .right-col { width: 100%; margin-bottom: 5px; }
             header { flex-direction: column; align-items: stretch; padding: 15px; }
             .logo-nav { flex-direction: column; align-items: center; gap: 15px; }
-            .logo-header img { margin: 0; }
             .main-nav { flex-wrap: wrap; justify-content: center; width: 100%; gap: 8px; }
             .main-nav a, .main-nav button { flex: 1 1 30%; text-align: center; padding: 8px 5px; }
             .search-bar { margin-top: 15px; width: 100%; justify-content: center; }
-            .search-bar input { width: 70%; padding: 8px; }
-            .search-bar button { padding: 8px 12px; }
-            .top-bar { text-align: center; line-height: 1.6; padding: 8px 5px; }
-            .quiz-container { padding: 20px 15px; }
-            .question { font-size: 16px; }
-            .options button { padding: 12px; font-size: 14px; }
+            .scrap-item { flex-direction: column; text-align: center; }
             .themes-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -414,9 +385,8 @@
                 <nav class="main-nav">
                     <a href="#" onclick="showSection('quiz')">início</a>
                     <a href="#" onclick="showSection('quiz')">perfil</a>
+                    <a href="#" onclick="showSection('scraps')">scraps</a>
                     <a href="#" onclick="showSection('pacman')">pop pacman</a>
-                    <a href="#">comunidades</a>
-                    <a href="#">aplicativos</a>
                     <a href="#" onclick="showSection('themes')">temas</a>
                 </nav>
             </div>
@@ -435,6 +405,34 @@
                     <div class="profile-name" id="display-name">Carregando...</div>
                     <div class="profile-username" id="display-username">@carregando</div>
                     <div style="font-size: 11px; color: green; margin-top: 5px;">● disponível</div>
+
+                    <!-- ÍCONES DE STATUS DO ORKUT -->
+                    <div class="orkut-status">
+                        <div class="status-row">
+                            <span>confiável</span> 
+                            <div class="icons" id="confiavel-icons">
+                                <span onclick="rateStatus('confiavel', 1)">🧊</span>
+                                <span onclick="rateStatus('confiavel', 2)">🧊</span>
+                                <span onclick="rateStatus('confiavel', 3)">🧊</span>
+                            </div>
+                        </div>
+                        <div class="status-row">
+                            <span>legal</span> 
+                            <div class="icons" id="legal-icons">
+                                <span onclick="rateStatus('legal', 1)">😊</span>
+                                <span onclick="rateStatus('legal', 2)">😊</span>
+                                <span onclick="rateStatus('legal', 3)">😊</span>
+                            </div>
+                        </div>
+                        <div class="status-row">
+                            <span>sexy</span> 
+                            <div class="icons" id="sexy-icons">
+                                <span onclick="rateStatus('sexy', 1)">💖</span>
+                                <span onclick="rateStatus('sexy', 2)">💖</span>
+                                <span onclick="rateStatus('sexy', 3)">💖</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="box" style="padding: 0;">
@@ -442,34 +440,68 @@
                         <li><a href="#" onclick="showSection('quiz')">todas as atualizações</a></li>
                         <li><a href="#" onclick="showSection('quiz')">minhas atualizações</a></li>
                         <li><a href="#" onclick="showSection('quiz')">perfil</a></li>
-                        <li><a href="#" onclick="showSection('quiz')">lembretes</a></li>
+                        <li><a href="#" onclick="showSection('scraps')">scraps</a></li>
                         <li><a href="#" onclick="showSection('pacman')">pop pacman</a></li>
+                        <li><a href="#" onclick="showSection('themes')">temas</a></li>
                         <li><a href="#" onclick="showSection('quiz')">fotos</a></li>
-                        <li><a href="#" onclick="showSection('quiz')">vídeos</a></li>
                         <li><a href="#" onclick="showSection('quiz')">depoimentos</a></li>
                     </ul>
                 </div>
             </aside>
 
             <main class="center-col">
-                <!-- Seção do Quiz -->
+                <!-- Sorte de Hoje -->
+                <div class="sorte-hoje-box">
+                    <strong>Sorte de hoje:</strong> <span id="sorte-texto">Carregando sorte...</span>
+                </div>
+
+                <!-- Seção do Quiz Completo (Revertida e com 5 questões) -->
                 <div class="quiz-container" id="quiz-area">
-                    <h2 class="quiz-title">2000s Nostalgia Quiz</h2>
+                    <h2 class="quiz-title">IT In the 2000's - Nostalgia Quiz</h2>
                     
                     <div id="question-screen">
                         <div class="question" id="question-text">Loading question...</div>
                         <div class="options" id="options-container"></div>
-                        <p style="font-size: 12px; color: #999; margin-top: 20px; text-align: right;" id="progress-text">Question 1 of 10</p>
+                        <p style="font-size: 12px; color: #999; margin-top: 20px; text-align: right;" id="progress-text"></p>
                     </div>
 
                     <div id="score-screen">
                         <img id="generated-thank-you-img" alt="Certificate of Achievement">
                         <br>
-                        <button onclick="restartQuiz()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Try Again</button>
+                        <button onclick="restartQuiz()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Tentar Novamente</button>
                     </div>
                 </div>
 
-                <!-- Seção de Temas (Escolha de Cidades) -->
+                <!-- Mural de Scraps em GIF -->
+                <div class="quiz-container" id="scraps-area">
+                    <h2 class="quiz-title">Mural de Scraps</h2>
+                    
+                    <div class="scrap-item">
+                        <img src="https://media.giphy.com/media/l41YkxvU8c7J7Bba0/giphy.gif" alt="Bom dia Glitter">
+                        <div>
+                            <p><strong>Nanda_Pink:</strong> Oii miguxo!! Passando pra deixar um beijão! Não me deleta hein kkkk tchau!! add = add // topo = topo ✨</p>
+                            <p style="font-size: 11px; color: #999; margin-top: 5px;">enviado 12/05/06</p>
+                        </div>
+                    </div>
+                    
+                    <div class="scrap-item">
+                        <img src="https://media1.tenor.com/images/3f1a26d7c71f9cf159b3a0f78edfaaf5/tenor.gif" alt="Fim de semana">
+                        <div>
+                            <p><strong>Bia_sk8:</strong> Só leio scraps animados ♥ Bom final de semana!! xoxo</p>
+                            <p style="font-size: 11px; color: #999; margin-top: 5px;">enviado 10/05/06</p>
+                        </div>
+                    </div>
+
+                    <div class="scrap-item">
+                        <img src="https://media.giphy.com/media/3o7aD2saal6gCGWYAO/giphy.gif" alt="Saudades">
+                        <div>
+                            <p><strong>Léo:</strong> Iae cara, sumido! Vê se aparece na LAN House hj a tarde pra gente jogar um CS. Falou!</p>
+                            <p style="font-size: 11px; color: #999; margin-top: 5px;">enviado 08/05/06</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção de Temas -->
                 <div class="quiz-container" id="themes-area">
                     <h2 class="quiz-title">Escolha o Tema de Fundo do Site</h2>
                     <div class="themes-grid">
@@ -493,17 +525,11 @@
                     <button class="reset-theme-btn" onclick="resetTheme()">Restaurar Tema Original (Orkut)</button>
                 </div>
 
-                <!-- Seção do Pop Pacman (Taylor vs Kanye) -->
+                <!-- Seção do Pop Pacman -->
                 <div class="quiz-container" id="pacman-area">
                     <h2 class="quiz-title">Pop Pacman: Taylor vs Kanye</h2>
-                    
-                    <div class="game-controls-info">
-                        Fuja do Kanye West o máximo que puder! | Pontuação: <span id="game-score">0</span>
-                    </div>
-
+                    <div class="game-controls-info">Fuja do Kanye West o máximo que puder! | Pontuação: <span id="game-score">0</span></div>
                     <canvas id="gameCanvas" width="360" height="260"></canvas>
-
-                    <!-- Botões direcionais para celular -->
                     <div class="mobile-dpad">
                         <button class="dpad-btn" onclick="movePlayer('UP')">▲</button>
                         <div class="dpad-row">
@@ -512,7 +538,6 @@
                         </div>
                         <button class="dpad-btn" onclick="movePlayer('DOWN')">▼</button>
                     </div>
-
                     <div>
                         <button id="start-game-btn" onclick="toggleGame()" style="padding: 10px 25px; background: #d82583; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Iniciar Jogo</button>
                     </div>
@@ -534,6 +559,34 @@
     </div>
 
     <script>
+        // --- Animação dos Ícones do Orkut ---
+        function rateStatus(type, level) {
+            const container = document.getElementById(`${type}-icons`);
+            const spans = container.querySelectorAll('span');
+            spans.forEach((span, index) => {
+                if (index < level) {
+                    span.classList.add('active');
+                    span.style.transform = "scale(1.4)";
+                    setTimeout(() => span.style.transform = "scale(1)", 200);
+                } else {
+                    span.classList.remove('active');
+                }
+            });
+        }
+
+        // --- Sorte de Hoje Gerador ---
+        const frasesSorte = [
+            "A vida é uma caixinha de surpresas.",
+            "Só não tem jeito para a morte, pro resto a gente dá um jeito.",
+            "Tudo o que um sonho precisa para ser realizado é alguém que acredite nele.",
+            "Não leve a vida tão a sério, você não vai sair vivo dela.",
+            "Quem não arrisca, não petisca.",
+            "A beleza está nos olhos de quem vê.",
+            "O importante não é vencer todos os dias, mas lutar sempre."
+        ];
+        document.getElementById('sorte-texto').textContent = frasesSorte[Math.floor(Math.random() * frasesSorte.length)];
+
+        // --- Login ---
         const registerForm = document.getElementById('register-form');
         const loginOverlay = document.getElementById('login-overlay');
         const mainSite = document.getElementById('main-site');
@@ -543,7 +596,6 @@
 
         registerForm.addEventListener('submit', function(event) {
             event.preventDefault(); 
-            
             const nameValue = userNameInput.value.trim();
             const usernameValue = document.getElementById('user-username').value.trim();
 
@@ -551,31 +603,37 @@
                 displayName.textContent = nameValue;
                 displayUsername.textContent = "@" + usernameValue;
                 
+                rateStatus('confiavel', 3);
+                rateStatus('legal', 2);
+                rateStatus('sexy', 1);
+
                 loginOverlay.style.display = 'none';
                 mainSite.style.display = 'flex'; 
                 mainSite.style.flexDirection = 'column';
             }
         });
 
+        // --- Navegação das Seções ---
         function showSection(section) {
+            event?.preventDefault();
             const quizArea = document.getElementById('quiz-area');
             const pacmanArea = document.getElementById('pacman-area');
             const themesArea = document.getElementById('themes-area');
+            const scrapsArea = document.getElementById('scraps-area');
 
             quizArea.style.display = 'none';
             pacmanArea.style.display = 'none';
             themesArea.style.display = 'none';
+            scrapsArea.style.display = 'none';
             stopGame();
 
-            if(section === 'quiz') {
-                quizArea.style.display = 'block';
-            } else if(section === 'pacman') {
-                pacmanArea.style.display = 'block';
-            } else if(section === 'themes') {
-                themesArea.style.display = 'block';
-            }
+            if(section === 'quiz') { quizArea.style.display = 'block'; } 
+            else if(section === 'pacman') { pacmanArea.style.display = 'block'; } 
+            else if(section === 'themes') { themesArea.style.display = 'block'; }
+            else if(section === 'scraps') { scrapsArea.style.display = 'block'; }
         }
 
+        // --- Temas ---
         function setTheme(imagePath) {
             document.body.style.backgroundImage = `url('${imagePath}')`;
             document.body.style.backgroundRepeat = "no-repeat";
@@ -589,18 +647,13 @@
             document.body.style.background = "linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%)";
         }
 
-        // --- Perguntas do Quiz ---
+        // --- Quiz Clássico (5 Questões) ---
         const questions = [
-            { question: "What was the golden rule of writing an Orkut Testimonial for a friend?", options: ["Write a highly formal essay.", "Post it, but tell them to delete it so no one else reads it.", "Print it and frame it on the wall.", "Pay a monthly fee to post it."], answer: 1 },
-            { question: "What did you do when someone was ignoring you on MSN Messenger?", options: ["Send a polite follow-up letter.", "Make a collect phone call to their house.", "Send 15 'Nudges' to make their screen shake with a loud noise.", "Go to their house and knock on the door."], answer: 2 },
-            { question: "What was the universal trick to fix a video game that wouldn't load?", options: ["Wash it with soap and water.", "Take it out, blow into it as hard as you can, and put it back in.", "Read the instruction manual.", "Take it to a professional mechanic."], answer: 1 },
-            { question: "How did we bring our favorite music to listen to in the car or on a trip?", options: ["Using Spotify Premium.", "Connecting via Bluetooth.", "Burning a mix CD on the family computer and praying it wouldn't skip.", "Carrying a live band in the back seat."], answer: 2 },
-            { question: "When was the only allowed time to use the internet at home without making your parents angry about the phone bill?", options: ["Tuesday at noon.", "Anytime, internet was completely free.", "Only after midnight or on weekends.", "During dinner time."], answer: 2 },
-            { question: "What usually happened when you tried to download a free song from the internet?", options: ["The singer sent you a thank-you letter.", "You accidentally downloaded a computer virus instead of the song.", "The song arrived by mail the next day.", "The computer gave you a high-five."], answer: 1 },
-            { question: "What did you do when your computer mouse stopped moving smoothly?", options: ["Give it a piece of cheese.", "Open the bottom, take out the heavy rubber ball, and clean the dirt off it.", "Buy a brand new house.", "Water it like a plant."], answer: 1 },
-            { question: "How did people fit everything they wanted to say into one single cell phone text message (SMS) to save money?", options: ["Send a 5-minute voice note instead.", "Write a normal letter and take a picture of it.", "Typ lyk ths wthout ny vwls so it all fts n 1 txt.", "Use a loud megaphone out the window."], answer: 2 },
-            { question: "How did you make the title of your school project look super fancy on the computer?", options: ["By using 3D, rainbow-colored WordArt.", "Hiring a professional painter.", "Buying expensive stickers.", "Putting real glitter on the screen."], answer: 0 },
-            { question: "How did you show your friends the photos you took on a weekend trip?", options: ["Posted a 15-second story on TikTok.", "Sent them to a WhatsApp group chat.", "Took the camera memory card to the store, printed the photos on paper, and put them in an album.", "Swiped left and right on an iPad."], answer: 2 }
+            { question: "1. What was the golden rule of writing an Orkut Testimonial for a friend?", options: ["Write a highly formal essay.", "Post it, but tell them to delete it so no one else reads it.", "Print it and frame it on the wall.", "Pay a monthly fee to post it."], answer: 1 },
+            { question: "2. What did you do when someone was ignoring you on MSN Messenger?", options: ["Send a polite follow-up letter.", "Make a collect phone call to their house.", "Send 15 'Nudges' to make their screen shake with a loud noise.", "Go to their house and knock on the door."], answer: 2 },
+            { question: "3. What was the universal trick to fix a video game that wouldn't load?", options: ["Wash it with soap and water.", "Take it out, blow into it as hard as you can, and put it back in.", "Read the instruction manual.", "Take it to a professional mechanic."], answer: 1 },
+            { question: "4. How did we bring our favorite music to listen to in the car or on a trip?", options: ["Using Spotify Premium.", "Connecting via Bluetooth.", "Burning a mix CD on the family computer and praying it wouldn't skip.", "Carrying a live band in the back seat."], answer: 2 },
+            { question: "5. When was the only allowed time to use the internet at home without making your parents angry about the phone bill?", options: ["Tuesday at noon.", "Anytime, internet was completely free.", "Only after midnight or on weekends.", "During dinner time."], answer: 2 }
         ];
 
         let currentQuestionIndex = 0;
@@ -649,95 +702,48 @@
                 } else {
                     showScore();
                 }
-            }, 1500);
+            }, 1200);
         }
 
         async function generateAcademicCertificate(name, currentScore, totalQuestions) {
             const canvas = document.createElement("canvas");
-            canvas.width = 800;
-            canvas.height = 750;
+            canvas.width = 800; canvas.height = 750;
             const ctx = canvas.getContext("2d");
 
-            ctx.fillStyle = "#fafafa";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.strokeStyle = "#2c3e50";
-            ctx.lineWidth = 12;
-            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            ctx.fillStyle = "#fafafa"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = "#2c3e50"; ctx.lineWidth = 12; ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            ctx.strokeStyle = "#d82583"; ctx.lineWidth = 3; ctx.strokeRect(38, 38, canvas.width - 76, canvas.height - 76);
             
-            ctx.strokeStyle = "#d82583";
-            ctx.lineWidth = 3;
-            ctx.strokeRect(38, 38, canvas.width - 76, canvas.height - 76);
-
             ctx.textAlign = "center";
+            ctx.fillStyle = "#2c3e50"; ctx.font = "bold 42px 'Times New Roman', Times, serif"; ctx.fillText("CERTIFICATE OF NOSTALGIA", canvas.width / 2, 130);
+            ctx.fillStyle = "#555"; ctx.font = "italic 22px 'Times New Roman', Times, serif"; ctx.fillText("This is to certify that", canvas.width / 2, 210);
+            ctx.fillStyle = "#000"; ctx.font = "bold 48px 'Times New Roman', Times, serif"; ctx.fillText(name, canvas.width / 2, 280);
+            ctx.fillStyle = "#555"; ctx.font = "20px Arial, sans-serif"; ctx.fillText("has successfully completed the assessment for", canvas.width / 2, 350);
+            ctx.fillStyle = "#d82583"; ctx.font = "bold 32px Arial, sans-serif"; ctx.fillText("The 2000s Era", canvas.width / 2, 400);
+            ctx.fillStyle = "#2c3e50"; ctx.font = "bold 24px Arial, sans-serif"; ctx.fillText(`Final Score: ${currentScore} / ${totalQuestions}`, canvas.width / 2, 460);
+            ctx.fillStyle = "#d82583"; ctx.font = "bold 20px Arial, sans-serif"; ctx.fillText("Teacher Roberto Mestre Gives You a:", canvas.width / 2, 510);
 
-            ctx.fillStyle = "#2c3e50";
-            ctx.font = "bold 42px 'Times New Roman', Times, serif";
-            ctx.fillText("CERTIFICATE OF NOSTALGIA", canvas.width / 2, 130);
-
-            ctx.fillStyle = "#555";
-            ctx.font = "italic 22px 'Times New Roman', Times, serif";
-            ctx.fillText("This is to certify that", canvas.width / 2, 210);
-
-            ctx.fillStyle = "#000";
-            ctx.font = "bold 48px 'Times New Roman', Times, serif";
-            ctx.fillText(name, canvas.width / 2, 280);
-
-            ctx.fillStyle = "#555";
-            ctx.font = "20px Arial, sans-serif";
-            ctx.fillText("has successfully completed the assessment for", canvas.width / 2, 350);
-
-            ctx.fillStyle = "#d82583";
-            ctx.font = "bold 32px Arial, sans-serif";
-            ctx.fillText("The 2000s Era", canvas.width / 2, 400);
-
-            ctx.fillStyle = "#2c3e50";
-            ctx.font = "bold 24px Arial, sans-serif";
-            ctx.fillText(`Final Score: ${currentScore} / ${totalQuestions}`, canvas.width / 2, 460);
-
-            ctx.fillStyle = "#d82583";
-            ctx.font = "bold 20px Arial, sans-serif";
-            ctx.fillText("Teacher Roberto Mestre Gives You a:", canvas.width / 2, 510);
-
+            // Regra: 0 a 2 = visto, 3 e 4 = great, 5 = perfect
             let gradeImageSrc = "mestreassinatura.jpeg";
-            if (currentScore >= 8) {
-                gradeImageSrc = "perfect.jpeg";
-            } else if (currentScore >= 5) {
-                gradeImageSrc = "great.jpeg";
+            if (currentScore === 5) { 
+                gradeImageSrc = "perfect.jpeg"; 
+            } else if (currentScore >= 3) { 
+                gradeImageSrc = "great.jpeg"; 
             }
 
             const drawFooter = () => {
-                ctx.fillStyle = "#333";
-                ctx.font = "16px Arial, sans-serif";
+                ctx.fillStyle = "#333"; ctx.font = "16px Arial, sans-serif";
                 const today = new Date().toLocaleDateString('en-US');
                 ctx.fillText("Date: " + today, 200, 700);
-                
-                ctx.beginPath();
-                ctx.moveTo(120, 680);
-                ctx.lineTo(280, 680);
-                ctx.strokeStyle = "#333";
-                ctx.lineWidth = 1;
-                ctx.stroke();
-
+                ctx.beginPath(); ctx.moveTo(120, 680); ctx.lineTo(280, 680); ctx.strokeStyle = "#333"; ctx.lineWidth = 1; ctx.stroke();
                 ctx.fillText("Orkut Help Signature", 600, 700);
-                
-                ctx.beginPath();
-                ctx.moveTo(520, 680);
-                ctx.lineTo(680, 680);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(520, 680); ctx.lineTo(680, 680); ctx.stroke();
             };
 
             return new Promise((resolve) => {
                 const img = new Image();
-                img.onload = () => {
-                    ctx.drawImage(img, (canvas.width / 2) - 80, 530, 160, 120);
-                    drawFooter();
-                    resolve(canvas.toDataURL("image/png"));
-                };
-                img.onerror = () => {
-                    drawFooter();
-                    resolve(canvas.toDataURL("image/png"));
-                };
+                img.onload = () => { ctx.drawImage(img, (canvas.width / 2) - 80, 530, 160, 120); drawFooter(); resolve(canvas.toDataURL("image/png")); };
+                img.onerror = () => { drawFooter(); resolve(canvas.toDataURL("image/png")); };
                 img.src = gradeImageSrc;
             });
         }
@@ -745,7 +751,6 @@
         async function showScore() {
             questionScreen.style.display = "none";
             scoreScreen.style.display = "block";
-            
             const playerName = userNameInput.value.trim() || "Student";
             generatedImg.src = await generateAcademicCertificate(playerName, score, questions.length);
         }
@@ -760,29 +765,22 @@
 
         loadQuestion();
 
-        // --- Lógica do Minijogo (Pop Pacman puxando da pasta local) ---
+        // --- Pacman ---
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const gameScoreText = document.getElementById("game-score");
         const startGameBtn = document.getElementById("start-game-btn");
 
-        let gameInterval = null;
-        let gameRunning = false;
-        let gameScore = 0;
-
+        let gameInterval = null; let gameRunning = false; let gameScore = 0;
         let taylor = { x: 40, y: 40, size: 32, speed: 2.5, dx: 0, dy: 0 };
         let kanye = { x: 280, y: 180, size: 32, speed: 1.2 };
         let star = { x: Math.random() * 300 + 30, y: Math.random() * 200 + 30, size: 14 };
 
-        const taylorImg = new Image();
-        taylorImg.src = "taylorswift.jpg";
-        let taylorLoaded = false;
-        taylorImg.onload = () => { taylorLoaded = true; };
+        const taylorImg = new Image(); taylorImg.src = "taylorswift.jpg";
+        let taylorLoaded = false; taylorImg.onload = () => { taylorLoaded = true; };
 
-        const kanyeImg = new Image();
-        kanyeImg.src = "kanye.jpg";
-        let kanyeLoaded = false;
-        kanyeImg.onload = () => { kanyeLoaded = true; };
+        const kanyeImg = new Image(); kanyeImg.src = "kanye.jpg";
+        let kanyeLoaded = false; kanyeImg.onload = () => { kanyeLoaded = true; };
 
         window.addEventListener('keydown', function(e) {
             if (!gameRunning) return;
@@ -800,97 +798,54 @@
             if (dir === 'RIGHT') { taylor.dx = taylor.speed; taylor.dy = 0; }
         }
 
-        function toggleGame() {
-            if (!gameRunning) {
-                startGame();
-            } else {
-                stopGame();
-            }
-        }
+        function toggleGame() { if (!gameRunning) { startGame(); } else { stopGame(); } }
 
         function startGame() {
-            gameRunning = true;
-            gameScore = 0;
-            gameScoreText.textContent = gameScore;
+            gameRunning = true; gameScore = 0; gameScoreText.textContent = gameScore;
             startGameBtn.textContent = "Parar Jogo";
-            taylor.x = 40; taylor.y = 40; taylor.dx = 0; taylor.dy = 0;
-            kanye.x = 280; kanye.y = 180;
-            
+            taylor.x = 40; taylor.y = 40; taylor.dx = 0; taylor.dy = 0; kanye.x = 280; kanye.y = 180;
             if (gameInterval) clearInterval(gameInterval);
             gameInterval = setInterval(updateGame, 1000 / 60);
         }
 
         function stopGame() {
-            gameRunning = false;
-            startGameBtn.textContent = "Iniciar Jogo";
+            gameRunning = false; startGameBtn.textContent = "Iniciar Jogo";
             if (gameInterval) clearInterval(gameInterval);
         }
 
         function updateGame() {
-            taylor.x += taylor.dx;
-            taylor.y += taylor.dy;
-
-            if (taylor.x < 0) taylor.x = 0;
-            if (taylor.x > canvas.width - taylor.size) taylor.x = canvas.width - taylor.size;
-            if (taylor.y < 0) taylor.y = 0;
-            if (taylor.y > canvas.height - taylor.size) taylor.y = canvas.height - taylor.size;
-
-            if (kanye.x < taylor.x) kanye.x += kanye.speed;
-            if (kanye.x > taylor.x) kanye.x -= kanye.speed;
-            if (kanye.y < taylor.y) kanye.y += kanye.speed;
-            if (kanye.y > taylor.y) kanye.y -= kanye.speed;
+            taylor.x += taylor.dx; taylor.y += taylor.dy;
+            if (taylor.x < 0) taylor.x = 0; if (taylor.x > canvas.width - taylor.size) taylor.x = canvas.width - taylor.size;
+            if (taylor.y < 0) taylor.y = 0; if (taylor.y > canvas.height - taylor.size) taylor.y = canvas.height - taylor.size;
+            if (kanye.x < taylor.x) kanye.x += kanye.speed; if (kanye.x > taylor.x) kanye.x -= kanye.speed;
+            if (kanye.y < taylor.y) kanye.y += kanye.speed; if (kanye.y > taylor.y) kanye.y -= kanye.speed;
 
             let distStar = Math.hypot((taylor.x + taylor.size/2) - (star.x + star.size/2), (taylor.y + taylor.size/2) - (star.y + star.size/2));
             if (distStar < taylor.size/2 + star.size/2) {
-                gameScore += 10;
-                gameScoreText.textContent = gameScore;
-                star.x = Math.random() * (canvas.width - 40) + 20;
-                star.y = Math.random() * (canvas.height - 40) + 20;
+                gameScore += 10; gameScoreText.textContent = gameScore;
+                star.x = Math.random() * (canvas.width - 40) + 20; star.y = Math.random() * (canvas.height - 40) + 20;
             }
 
             let distKanye = Math.hypot((taylor.x + taylor.size/2) - (kanye.x + kanye.size/2), (taylor.y + taylor.size/2) - (kanye.y + kanye.size/2));
             if (distKanye < taylor.size * 0.7) {
                 alert("Game Over! O Kanye te pegou! Pontuação final: " + gameScore);
-                stopGame();
-                return;
+                stopGame(); return;
             }
-
             drawGame();
         }
 
         function drawGame() {
-            ctx.fillStyle = "#111";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#111"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#f1c40f"; ctx.beginPath(); ctx.arc(star.x, star.y, star.size/2, 0, Math.PI * 2); ctx.fill();
 
-            ctx.fillStyle = "#f1c40f";
-            ctx.beginPath();
-            ctx.arc(star.x, star.y, star.size/2, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Desenhar Taylor (Puxando de taylorswift.jpg da pasta)
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(taylor.x + taylor.size/2, taylor.y + taylor.size/2, taylor.size/2, 0, Math.PI * 2);
-            ctx.clip();
-            if (taylorLoaded) {
-                ctx.drawImage(taylorImg, taylor.x, taylor.y, taylor.size, taylor.size);
-            } else {
-                ctx.fillStyle = "#ff69b4";
-                ctx.fillRect(taylor.x, taylor.y, taylor.size, taylor.size);
-            }
+            ctx.save(); ctx.beginPath(); ctx.arc(taylor.x + taylor.size/2, taylor.y + taylor.size/2, taylor.size/2, 0, Math.PI * 2); ctx.clip();
+            if (taylorLoaded) { ctx.drawImage(taylorImg, taylor.x, taylor.y, taylor.size, taylor.size); } 
+            else { ctx.fillStyle = "#ff69b4"; ctx.fillRect(taylor.x, taylor.y, taylor.size, taylor.size); }
             ctx.restore();
 
-            // Desenhar Kanye (Puxando de kanye.jpg da pasta)
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(kanye.x + kanye.size/2, kanye.y + kanye.size/2, kanye.size/2, 0, Math.PI * 2);
-            ctx.clip();
-            if (kanyeLoaded) {
-                ctx.drawImage(kanyeImg, kanye.x, kanye.y, kanye.size, kanye.size);
-            } else {
-                ctx.fillStyle = "#34495e";
-                ctx.fillRect(kanye.x, kanye.y, kanye.size, kanye.size);
-            }
+            ctx.save(); ctx.beginPath(); ctx.arc(kanye.x + kanye.size/2, kanye.y + kanye.size/2, kanye.size/2, 0, Math.PI * 2); ctx.clip();
+            if (kanyeLoaded) { ctx.drawImage(kanyeImg, kanye.x, kanye.y, kanye.size, kanye.size); } 
+            else { ctx.fillStyle = "#34495e"; ctx.fillRect(kanye.x, kanye.y, kanye.size, kanye.size); }
             ctx.restore();
         }
     </script>
