@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orkut Help CNI - Leitor de Gabarito por Foto</title>
+    <title>Orkut Help CNI - Nostalgia & Quiz</title>
     <style>
         /* --- Forçar Modo Claro Global --- */
         :root {
@@ -191,14 +191,13 @@
         .side-menu li a { color: #1155cc; text-decoration: none; display: block; }
         .side-menu li:first-child a { color: white; }
 
-        /* --- Leitor de Gabarito por Foto & Conteúdo Central --- */
+        /* --- Quiz, Conteúdo Central & Seção de Temas --- */
         .quiz-container { 
             background: #fff; 
             padding: 30px; 
             border: none; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
             border-radius: 8px; 
-            text-align: center;
         }
         .quiz-title { 
             color: #333; 
@@ -207,45 +206,26 @@
             margin-bottom: 25px;
             font-weight: 400;
             letter-spacing: 0.5px;
-            text-align: left;
         }
-
-        .upload-gabarito-box {
-            border: 2px dashed #b0c4de;
-            padding: 30px 20px;
-            border-radius: 8px;
-            background: #f8fbff;
-            margin-bottom: 20px;
+        .question { font-size: 17px; margin-bottom: 20px; font-weight: 600; color: #222; }
+        
+        .options button {
+            display: block; width: 100%; text-align: left; padding: 15px;
+            margin-bottom: 10px; background: #fff; border: 1px solid #ddd;
+            border-radius: 6px; cursor: pointer; font-size: 15px;
+            color: #333;
+            transition: all 0.2s ease;
         }
-
-        .upload-gabarito-box input[type="file"] {
-            margin-top: 15px;
-            font-size: 14px;
+        .options button.correct {
+            background-color: #e8f5e9 !important;
+            border-color: #4caf50 !important;
+            color: #2e7d32 !important;
         }
-
-        #preview-gabarito {
-            max-width: 100%;
-            max-height: 250px;
-            border-radius: 6px;
-            margin-top: 15px;
-            border: 1px solid #ccc;
-            display: none;
+        .options button.incorrect {
+            background-color: #ffebee !important;
+            border-color: #f44336 !important;
+            color: #c62828 !important;
         }
-
-        .submit-gabarito-btn {
-            display: inline-block;
-            width: 100%;
-            padding: 12px;
-            background-color: #d82583;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .submit-gabarito-btn:hover { background-color: #b51c6c; }
 
         #score-screen { display: none; text-align: center; }
         
@@ -257,7 +237,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.15);
         }
 
-        /* --- Seção de Temas (Escolha de Cidades) --- */
+        /* --- Seção de Seleção de Temas --- */
         #themes-area {
             display: none;
         }
@@ -327,6 +307,7 @@
             margin-bottom: 10px;
         }
 
+        /* Controles Virtuais para Celular */
         .mobile-dpad {
             display: flex;
             flex-direction: column;
@@ -389,6 +370,8 @@
             .search-bar button { padding: 8px 12px; }
             .top-bar { text-align: center; line-height: 1.6; padding: 8px 5px; }
             .quiz-container { padding: 20px 15px; }
+            .question { font-size: 16px; }
+            .options button { padding: 12px; font-size: 14px; }
             .themes-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -429,8 +412,8 @@
                     <img src="orkut.webp" alt="Orkut">
                 </div>
                 <nav class="main-nav">
-                    <a href="#" onclick="showSection('gabarito')">início</a>
-                    <a href="#" onclick="showSection('gabarito')">perfil</a>
+                    <a href="#" onclick="showSection('quiz')">início</a>
+                    <a href="#" onclick="showSection('quiz')">perfil</a>
                     <a href="#" onclick="showSection('pacman')">pop pacman</a>
                     <a href="#">comunidades</a>
                     <a href="#">aplicativos</a>
@@ -456,38 +439,33 @@
 
                 <div class="box" style="padding: 0;">
                     <ul class="side-menu">
-                        <li><a href="#" onclick="showSection('gabarito')">todas as atualizações</a></li>
-                        <li><a href="#" onclick="showSection('gabarito')">minhas atualizações</a></li>
-                        <li><a href="#" onclick="showSection('gabarito')">perfil</a></li>
-                        <li><a href="#" onclick="showSection('gabarito')">lembretes</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">todas as atualizações</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">minhas atualizações</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">perfil</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">lembretes</a></li>
                         <li><a href="#" onclick="showSection('pacman')">pop pacman</a></li>
-                        <li><a href="#" onclick="showSection('gabarito')">fotos</a></li>
-                        <li><a href="#" onclick="showSection('gabarito')">vídeos</a></li>
-                        <li><a href="#" onclick="showSection('gabarito')">depoimentos</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">fotos</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">vídeos</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">depoimentos</a></li>
                     </ul>
                 </div>
             </aside>
 
             <main class="center-col">
-                <!-- Seção de Envio de Foto do Gabarito -->
-                <div class="quiz-container" id="gabarito-area">
-                    <h2 class="quiz-title">Envio da Foto do Gabarito</h2>
+                <!-- Seção do Quiz -->
+                <div class="quiz-container" id="quiz-area">
+                    <h2 class="quiz-title">2000s Nostalgia Quiz</h2>
                     
-                    <div id="gabarito-screen">
-                        <div class="upload-gabarito-box">
-                            <p style="font-size: 14px; color: #333; margin-bottom: 10px; font-weight: bold;">Tire ou envie a foto da sua folha de respostas respondida:</p>
-                            <input type="file" id="gabarito-file-input" accept="image/*" capture="environment">
-                            <br>
-                            <img id="preview-gabarito" alt="Pré-visualização do Gabarito">
-                        </div>
-
-                        <button type="button" class="submit-gabarito-btn" onclick="processarFotoGabarito()">Enviar e Analisar Gabarito</button>
+                    <div id="question-screen">
+                        <div class="question" id="question-text">Loading question...</div>
+                        <div class="options" id="options-container"></div>
+                        <p style="font-size: 12px; color: #999; margin-top: 20px; text-align: right;" id="progress-text">Question 1 of 10</p>
                     </div>
 
                     <div id="score-screen">
                         <img id="generated-thank-you-img" alt="Certificate of Achievement">
                         <br>
-                        <button onclick="restartGabarito()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Tentar Novamente</button>
+                        <button onclick="restartQuiz()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Try Again</button>
                     </div>
                 </div>
 
@@ -525,6 +503,7 @@
 
                     <canvas id="gameCanvas" width="360" height="260"></canvas>
 
+                    <!-- Botões direcionais para celular -->
                     <div class="mobile-dpad">
                         <button class="dpad-btn" onclick="movePlayer('UP')">▲</button>
                         <div class="dpad-row">
@@ -579,18 +558,17 @@
         });
 
         function showSection(section) {
-            event?.preventDefault(); // Evita comportamento indesejado em celulares
-            const gabaritoArea = document.getElementById('gabarito-area');
+            const quizArea = document.getElementById('quiz-area');
             const pacmanArea = document.getElementById('pacman-area');
             const themesArea = document.getElementById('themes-area');
 
-            gabaritoArea.style.display = 'none';
+            quizArea.style.display = 'none';
             pacmanArea.style.display = 'none';
             themesArea.style.display = 'none';
             stopGame();
 
-            if(section === 'gabarito') {
-                gabaritoArea.style.display = 'block';
+            if(section === 'quiz') {
+                quizArea.style.display = 'block';
             } else if(section === 'pacman') {
                 pacmanArea.style.display = 'block';
             } else if(section === 'themes') {
@@ -611,45 +589,67 @@
             document.body.style.background = "linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%)";
         }
 
-        // --- Lógica de Upload e Leitura Estável da Foto do Gabarito ---
-        const gabaritoFileInput = document.getElementById('gabarito-file-input');
-        const previewGabarito = document.getElementById('preview-gabarito');
+        // --- Perguntas do Quiz ---
+        const questions = [
+            { question: "What was the golden rule of writing an Orkut Testimonial for a friend?", options: ["Write a highly formal essay.", "Post it, but tell them to delete it so no one else reads it.", "Print it and frame it on the wall.", "Pay a monthly fee to post it."], answer: 1 },
+            { question: "What did you do when someone was ignoring you on MSN Messenger?", options: ["Send a polite follow-up letter.", "Make a collect phone call to their house.", "Send 15 'Nudges' to make their screen shake with a loud noise.", "Go to their house and knock on the door."], answer: 2 },
+            { question: "What was the universal trick to fix a video game that wouldn't load?", options: ["Wash it with soap and water.", "Take it out, blow into it as hard as you can, and put it back in.", "Read the instruction manual.", "Take it to a professional mechanic."], answer: 1 },
+            { question: "How did we bring our favorite music to listen to in the car or on a trip?", options: ["Using Spotify Premium.", "Connecting via Bluetooth.", "Burning a mix CD on the family computer and praying it wouldn't skip.", "Carrying a live band in the back seat."], answer: 2 },
+            { question: "When was the only allowed time to use the internet at home without making your parents angry about the phone bill?", options: ["Tuesday at noon.", "Anytime, internet was completely free.", "Only after midnight or on weekends.", "During dinner time."], answer: 2 },
+            { question: "What usually happened when you tried to download a free song from the internet?", options: ["The singer sent you a thank-you letter.", "You accidentally downloaded a computer virus instead of the song.", "The song arrived by mail the next day.", "The computer gave you a high-five."], answer: 1 },
+            { question: "What did you do when your computer mouse stopped moving smoothly?", options: ["Give it a piece of cheese.", "Open the bottom, take out the heavy rubber ball, and clean the dirt off it.", "Buy a brand new house.", "Water it like a plant."], answer: 1 },
+            { question: "How did people fit everything they wanted to say into one single cell phone text message (SMS) to save money?", options: ["Send a 5-minute voice note instead.", "Write a normal letter and take a picture of it.", "Typ lyk ths wthout ny vwls so it all fts n 1 txt.", "Use a loud megaphone out the window."], answer: 2 },
+            { question: "How did you make the title of your school project look super fancy on the computer?", options: ["By using 3D, rainbow-colored WordArt.", "Hiring a professional painter.", "Buying expensive stickers.", "Putting real glitter on the screen."], answer: 0 },
+            { question: "How did you show your friends the photos you took on a weekend trip?", options: ["Posted a 15-second story on TikTok.", "Sent them to a WhatsApp group chat.", "Took the camera memory card to the store, printed the photos on paper, and put them in an album.", "Swiped left and right on an iPad."], answer: 2 }
+        ];
 
-        gabaritoFileInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewGabarito.src = e.target.result;
-                    previewGabarito.style.display = 'inline-block';
-                }
-                reader.readAsDataURL(file);
-            }
-        });
+        let currentQuestionIndex = 0;
+        let score = 0;
 
-        const gabaritoScreen = document.getElementById("gabarito-screen");
+        const questionText = document.getElementById("question-text");
+        const optionsContainer = document.getElementById("options-container");
+        const progressText = document.getElementById("progress-text");
+        const questionScreen = document.getElementById("question-screen");
         const scoreScreen = document.getElementById("score-screen");
         const generatedImg = document.getElementById("generated-thank-you-img");
 
-        async function processarFotoGabarito() {
-            const file = gabaritoFileInput.files[0];
-            if (!file) {
-                alert("Por favor, tire ou selecione a foto do seu gabarito preenchido!");
-                return;
+        function loadQuestion() {
+            const currentQ = questions[currentQuestionIndex];
+            questionText.textContent = currentQ.question;
+            optionsContainer.innerHTML = ""; 
+
+            currentQ.options.forEach((opt, index) => {
+                const btn = document.createElement("button");
+                btn.textContent = opt;
+                btn.onclick = (e) => checkAnswer(index, e.target);
+                optionsContainer.appendChild(btn);
+            });
+
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+        }
+
+        function checkAnswer(selectedIndex, clickedBtn) {
+            const allBtns = optionsContainer.querySelectorAll('button');
+            allBtns.forEach(btn => btn.disabled = true);
+
+            const correctIndex = questions[currentQuestionIndex].answer;
+
+            if (selectedIndex === correctIndex) {
+                score++;
+                clickedBtn.classList.add('correct');
+            } else {
+                clickedBtn.classList.add('incorrect');
+                allBtns[correctIndex].classList.add('correct');
             }
 
-            // Geração de nota consistente baseada no nome/tamanho do arquivo para nunca variar aleatoriamente
-            let hash = 0;
-            for (let i = 0; i < file.name.length; i++) {
-                hash += file.name.charCodeAt(i);
-            }
-            const scoreFixo = (hash + file.size) % 6; // Gera sempre um número fixo de 0 a 5 para a mesma foto
-
-            gabaritoScreen.style.display = "none";
-            scoreScreen.style.display = "block";
-            
-            const playerName = userNameInput.value.trim() || "Estudante";
-            generatedImg.src = await generateAcademicCertificate(playerName, scoreFixo, 5);
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion();
+                } else {
+                    showScore();
+                }
+            }, 1500);
         }
 
         async function generateAcademicCertificate(name, currentScore, totalQuestions) {
@@ -699,14 +699,10 @@
             ctx.font = "bold 20px Arial, sans-serif";
             ctx.fillText("Teacher Roberto Mestre Gives You a:", canvas.width / 2, 510);
 
-            // Regras solicitadas: 
-            // 0 a 2 -> mestreassinatura.jpeg (visto)
-            // 3 e 4 -> great.jpeg
-            // 5 -> perfect.jpeg
             let gradeImageSrc = "mestreassinatura.jpeg";
-            if (currentScore === 5) {
+            if (currentScore >= 8) {
                 gradeImageSrc = "perfect.jpeg";
-            } else if (currentScore >= 3) {
+            } else if (currentScore >= 5) {
                 gradeImageSrc = "great.jpeg";
             }
 
@@ -746,14 +742,25 @@
             });
         }
 
-        function restartGabarito() {
-            gabaritoFileInput.value = "";
-            previewGabarito.style.display = "none";
-            gabaritoScreen.style.display = "block";
-            scoreScreen.style.display = "none";
+        async function showScore() {
+            questionScreen.style.display = "none";
+            scoreScreen.style.display = "block";
+            
+            const playerName = userNameInput.value.trim() || "Student";
+            generatedImg.src = await generateAcademicCertificate(playerName, score, questions.length);
         }
 
-        // --- Lógica do Minijogo (Pop Pacman) ---
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            questionScreen.style.display = "block";
+            scoreScreen.style.display = "none";
+            loadQuestion();
+        }
+
+        loadQuestion();
+
+        // --- Lógica do Minijogo (Pop Pacman puxando da pasta local) ---
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const gameScoreText = document.getElementById("game-score");
@@ -860,6 +867,7 @@
             ctx.arc(star.x, star.y, star.size/2, 0, Math.PI * 2);
             ctx.fill();
 
+            // Desenhar Taylor (Puxando de taylorswift.jpg da pasta)
             ctx.save();
             ctx.beginPath();
             ctx.arc(taylor.x + taylor.size/2, taylor.y + taylor.size/2, taylor.size/2, 0, Math.PI * 2);
@@ -872,6 +880,7 @@
             }
             ctx.restore();
 
+            // Desenhar Kanye (Puxando de kanye.jpg da pasta)
             ctx.save();
             ctx.beginPath();
             ctx.arc(kanye.x + kanye.size/2, kanye.y + kanye.size/2, kanye.size/2, 0, Math.PI * 2);
