@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orkut Help CNI - Nostalgia Total</title>
+    <title>Orkut Help CNI</title>
     <style>
         /* --- Forçar Modo Claro Global --- */
         :root {
@@ -258,7 +258,7 @@
             color: #333;
             transition: all 0.2s ease;
         }
-        .options button:hover:not(:disabled) { 
+        .options button.hover:not(:disabled) { 
             border-color: #1155cc; 
             background: #f8fbff; 
         }
@@ -288,12 +288,7 @@
             margin-bottom: 15px;
             border-radius: 6px;
             display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        .scrap-item img {
-            max-width: 150px;
-            border-radius: 4px;
+            flex-direction: column;
         }
         .scrap-item p {
             font-size: 14px;
@@ -342,7 +337,6 @@
             .main-nav { flex-wrap: wrap; justify-content: center; width: 100%; gap: 8px; }
             .main-nav a, .main-nav button { flex: 1 1 30%; text-align: center; padding: 8px 5px; }
             .search-bar { margin-top: 15px; width: 100%; justify-content: center; }
-            .scrap-item { flex-direction: column; text-align: center; }
             .themes-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -358,23 +352,23 @@
             
             <form id="register-form">
                 <div class="input-group">
-                    <input type="text" id="user-name" placeholder="Seu Nome (Ex: João Silva)" required autocomplete="off">
+                    <input type="text" id="user-name" placeholder="Your Name (Ex: John Doe)" required autocomplete="off">
                 </div>
                 <div class="input-group">
-                    <input type="text" id="user-username" placeholder="Username (Ex: joao_silva)" required autocomplete="off">
+                    <input type="text" id="user-username" placeholder="Username (Ex: john_doe)" required autocomplete="off">
                 </div>
-                <button type="submit" class="login-btn">Entrar na Comunidade</button>
+                <button type="submit" class="login-btn">Join Community</button>
             </form>
         </div>
         
         <div class="login-footer">
-            Desenvolvido por Gustavo Vieira para apresentação sobre os anos 2000.
+            Developed by Gustavo Vieira for a presentation about the 2000s.
         </div>
     </div>
 
     <div id="main-site">
         <div class="top-bar">
-            Web | Mapas | Notícias | Livros | Tradutor | Gmail | configurações | sair
+            Web | Maps | News | Books | Translate | Gmail | settings | sign out
         </div>
 
         <header>
@@ -383,16 +377,16 @@
                     <img src="orkut.webp" alt="Orkut">
                 </div>
                 <nav class="main-nav">
-                    <a href="#" onclick="showSection('quiz')">início</a>
-                    <a href="#" onclick="showSection('quiz')">perfil</a>
+                    <a href="#" onclick="showSection('quiz')">home</a>
+                    <a href="#" onclick="showSection('quiz')">profile</a>
                     <a href="#" onclick="showSection('scraps')">scraps</a>
                     <a href="#" onclick="showSection('pacman')">pop pacman</a>
-                    <a href="#" onclick="showSection('themes')">temas</a>
+                    <a href="#" onclick="showSection('themes')">themes</a>
                 </nav>
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="buscar">
-                <button>buscar</button>
+                <input type="text" placeholder="search">
+                <button>search</button>
             </div>
         </header>
 
@@ -400,36 +394,28 @@
             <aside class="left-col">
                 <div class="box">
                     <div class="profile-img-container">
-                        <img id="profile-img" src="markzinho.webp" alt="Foto do Perfil">
+                        <img id="profile-img" src="markzinho.webp" alt="Profile Picture">
                     </div>
-                    <div class="profile-name" id="display-name">Carregando...</div>
-                    <div class="profile-username" id="display-username">@carregando</div>
-                    <div style="font-size: 11px; color: green; margin-top: 5px;">● disponível</div>
+                    <div class="profile-name" id="display-name">Loading...</div>
+                    <div class="profile-username" id="display-username">@loading</div>
+                    <div style="font-size: 11px; color: green; margin-top: 5px;">● online</div>
 
                     <!-- ÍCONES DE STATUS DO ORKUT -->
                     <div class="orkut-status">
                         <div class="status-row">
-                            <span>confiável</span> 
-                            <div class="icons" id="confiavel-icons">
-                                <span onclick="rateStatus('confiavel', 1)">🧊</span>
-                                <span onclick="rateStatus('confiavel', 2)">🧊</span>
-                                <span onclick="rateStatus('confiavel', 3)">🧊</span>
+                            <span>trustworthy</span> 
+                            <div class="icons" id="trustworthy-icons">
+                                <span onclick="rateStatus('trustworthy', 1)">🧊</span>
+                                <span onclick="rateStatus('trustworthy', 2)">🧊</span>
+                                <span onclick="rateStatus('trustworthy', 3)">🧊</span>
                             </div>
                         </div>
                         <div class="status-row">
-                            <span>legal</span> 
-                            <div class="icons" id="legal-icons">
-                                <span onclick="rateStatus('legal', 1)">😊</span>
-                                <span onclick="rateStatus('legal', 2)">😊</span>
-                                <span onclick="rateStatus('legal', 3)">😊</span>
-                            </div>
-                        </div>
-                        <div class="status-row">
-                            <span>sexy</span> 
-                            <div class="icons" id="sexy-icons">
-                                <span onclick="rateStatus('sexy', 1)">💖</span>
-                                <span onclick="rateStatus('sexy', 2)">💖</span>
-                                <span onclick="rateStatus('sexy', 3)">💖</span>
+                            <span>cool</span> 
+                            <div class="icons" id="cool-icons">
+                                <span onclick="rateStatus('cool', 1)">😊</span>
+                                <span onclick="rateStatus('cool', 2)">😊</span>
+                                <span onclick="rateStatus('cool', 3)">😊</span>
                             </div>
                         </div>
                     </div>
@@ -437,14 +423,14 @@
 
                 <div class="box" style="padding: 0;">
                     <ul class="side-menu">
-                        <li><a href="#" onclick="showSection('quiz')">todas as atualizações</a></li>
-                        <li><a href="#" onclick="showSection('quiz')">minhas atualizações</a></li>
-                        <li><a href="#" onclick="showSection('quiz')">perfil</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">all updates</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">my updates</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">profile</a></li>
                         <li><a href="#" onclick="showSection('scraps')">scraps</a></li>
                         <li><a href="#" onclick="showSection('pacman')">pop pacman</a></li>
-                        <li><a href="#" onclick="showSection('themes')">temas</a></li>
-                        <li><a href="#" onclick="showSection('quiz')">fotos</a></li>
-                        <li><a href="#" onclick="showSection('quiz')">depoimentos</a></li>
+                        <li><a href="#" onclick="showSection('themes')">themes</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">photos</a></li>
+                        <li><a href="#" onclick="showSection('quiz')">testimonials</a></li>
                     </ul>
                 </div>
             </aside>
@@ -452,10 +438,10 @@
             <main class="center-col">
                 <!-- Sorte de Hoje -->
                 <div class="sorte-hoje-box">
-                    <strong>Sorte de hoje:</strong> <span id="sorte-texto">Carregando sorte...</span>
+                    <strong>Luck of the day:</strong> <span id="sorte-texto">Loading luck...</span>
                 </div>
 
-                <!-- Seção do Quiz Completo (Revertida e com 5 questões) -->
+                <!-- Seção do Quiz Completo -->
                 <div class="quiz-container" id="quiz-area">
                     <h2 class="quiz-title">IT In the 2000's - Nostalgia Quiz</h2>
                     
@@ -468,42 +454,30 @@
                     <div id="score-screen">
                         <img id="generated-thank-you-img" alt="Certificate of Achievement">
                         <br>
-                        <button onclick="restartQuiz()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Tentar Novamente</button>
+                        <button onclick="restartQuiz()" style="padding: 12px 25px; background: #d82583; color: white; border: none; cursor: pointer; border-radius: 4px; margin-top: 10px; font-size: 14px; font-weight: bold;">Try Again</button>
                     </div>
                 </div>
 
-                <!-- Mural de Scraps em GIF -->
+                <!-- Mural de Scraps -->
                 <div class="quiz-container" id="scraps-area">
-                    <h2 class="quiz-title">Mural de Scraps</h2>
+                    <h2 class="quiz-title">Scrapbook</h2>
                     
                     <div class="scrap-item">
-                        <img src="https://media.giphy.com/media/l41YkxvU8c7J7Bba0/giphy.gif" alt="Bom dia Glitter">
-                        <div>
-                            <p><strong>Nanda_Pink:</strong> Oii miguxo!! Passando pra deixar um beijão! Não me deleta hein kkkk tchau!! add = add // topo = topo ✨</p>
-                            <p style="font-size: 11px; color: #999; margin-top: 5px;">enviado 12/05/06</p>
-                        </div>
+                        <p><strong>Mike:</strong> Yo dude, did you finish Mr. Smith's math assignment? I totally forgot about it! Let me copy yours before 1st period lol</p>
                     </div>
                     
                     <div class="scrap-item">
-                        <img src="https://media1.tenor.com/images/3f1a26d7c71f9cf159b3a0f78edfaaf5/tenor.gif" alt="Fim de semana">
-                        <div>
-                            <p><strong>Bia_sk8:</strong> Só leio scraps animados ♥ Bom final de semana!! xoxo</p>
-                            <p style="font-size: 11px; color: #999; margin-top: 5px;">enviado 10/05/06</p>
-                        </div>
+                        <p><strong>Jake_Sk8:</strong> Bro, are we still playing CS 1.6 after school at the cyber cafe? Don't be late this time man.</p>
                     </div>
 
                     <div class="scrap-item">
-                        <img src="https://media.giphy.com/media/3o7aD2saal6gCGWYAO/giphy.gif" alt="Saudades">
-                        <div>
-                            <p><strong>Léo:</strong> Iae cara, sumido! Vê se aparece na LAN House hj a tarde pra gente jogar um CS. Falou!</p>
-                            <p style="font-size: 11px; color: #999; margin-top: 5px;">enviado 08/05/06</p>
-                        </div>
+                        <p><strong>Alex:</strong> Hey man, don't forget to bring that Linkin Park CD you promised tomorrow! See ya at the cafeteria.</p>
                     </div>
                 </div>
 
                 <!-- Seção de Temas -->
                 <div class="quiz-container" id="themes-area">
-                    <h2 class="quiz-title">Escolha o Tema de Fundo do Site</h2>
+                    <h2 class="quiz-title">Choose your Theme</h2>
                     <div class="themes-grid">
                         <div class="theme-card" onclick="setTheme('riodejaneiro.jpg')">
                             <img src="riodejaneiro.jpg" alt="Rio de Janeiro">
@@ -511,24 +485,24 @@
                         </div>
                         <div class="theme-card" onclick="setTheme('novaiorque.jpg')">
                             <img src="novaiorque.jpg" alt="Nova York">
-                            <span>Nova York</span>
+                            <span>New York</span>
                         </div>
                         <div class="theme-card" onclick="setTheme('londres.jpg')">
                             <img src="londres.jpg" alt="Londres">
-                            <span>Londres</span>
+                            <span>London</span>
                         </div>
                         <div class="theme-card" onclick="setTheme('liberdade.jpg')">
                             <img src="liberdade.jpg" alt="Bairro da Liberdade">
-                            <span>Bairro da Liberdade</span>
+                            <span>Liberdade</span>
                         </div>
                     </div>
-                    <button class="reset-theme-btn" onclick="resetTheme()">Restaurar Tema Original (Orkut)</button>
+                    <button class="reset-theme-btn" onclick="resetTheme()">Reset to Orkut Theme</button>
                 </div>
 
                 <!-- Seção do Pop Pacman -->
                 <div class="quiz-container" id="pacman-area">
-                    <h2 class="quiz-title">Pop Pacman: Taylor vs Kanye</h2>
-                    <div class="game-controls-info">Fuja do Kanye West o máximo que puder! | Pontuação: <span id="game-score">0</span></div>
+                    <h2 class="quiz-title">Pop Pacman</h2>
+                    <div class="game-controls-info">Collect the dots and avoid the ghosts! | Score: <span id="game-score">0</span></div>
                     <canvas id="gameCanvas" width="360" height="260"></canvas>
                     <div class="mobile-dpad">
                         <button class="dpad-btn" onclick="movePlayer('UP')">▲</button>
@@ -539,22 +513,22 @@
                         <button class="dpad-btn" onclick="movePlayer('DOWN')">▼</button>
                     </div>
                     <div>
-                        <button id="start-game-btn" onclick="toggleGame()" style="padding: 10px 25px; background: #d82583; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Iniciar Jogo</button>
+                        <button id="start-game-btn" onclick="toggleGame()" style="padding: 10px 25px; background: #d82583; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Start Game</button>
                     </div>
                 </div>
             </main>
 
             <aside class="right-col">
                 <div class="box ad-box">
-                    <p>publicidade</p>
+                    <p>ads</p>
                     <img src="propagandaorkut.png" alt="Help CNI" style="max-width: 100px;">
-                    <p>Help CNI Cursos</p>
+                    <p>Help CNI Courses</p>
                 </div>
             </aside>
         </div>
 
         <footer class="site-footer">
-            Trabalho desenvolvido por Gustavo Vieira para apresentação sobre os anos 2000.
+            Developed by Gustavo Vieira for a presentation about the 2000s.
         </footer>
     </div>
 
@@ -574,15 +548,13 @@
             });
         }
 
-        // --- Sorte de Hoje Gerador ---
+        // --- Sorte de Hoje Gerador (Inglês) ---
         const frasesSorte = [
-            "A vida é uma caixinha de surpresas.",
-            "Só não tem jeito para a morte, pro resto a gente dá um jeito.",
-            "Tudo o que um sonho precisa para ser realizado é alguém que acredite nele.",
-            "Não leve a vida tão a sério, você não vai sair vivo dela.",
-            "Quem não arrisca, não petisca.",
-            "A beleza está nos olhos de quem vê.",
-            "O importante não é vencer todos os dias, mas lutar sempre."
+            "Life is like a box of chocolates. You never know what you're gonna get.",
+            "Don't take life too seriously. You will never get out of it alive.",
+            "The early bird catches the worm.",
+            "You miss 100% of the shots you don't take.",
+            "Beauty is in the eye of the beholder."
         ];
         document.getElementById('sorte-texto').textContent = frasesSorte[Math.floor(Math.random() * frasesSorte.length)];
 
@@ -603,9 +575,8 @@
                 displayName.textContent = nameValue;
                 displayUsername.textContent = "@" + usernameValue;
                 
-                rateStatus('confiavel', 3);
-                rateStatus('legal', 2);
-                rateStatus('sexy', 1);
+                rateStatus('trustworthy', 3);
+                rateStatus('cool', 2);
 
                 loginOverlay.style.display = 'none';
                 mainSite.style.display = 'flex'; 
@@ -765,70 +736,64 @@
 
         loadQuestion();
 
-        // --- Pacman ---
+        // --- Pacman Genérico ---
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const gameScoreText = document.getElementById("game-score");
         const startGameBtn = document.getElementById("start-game-btn");
 
         let gameInterval = null; let gameRunning = false; let gameScore = 0;
-        let taylor = { x: 40, y: 40, size: 32, speed: 2.5, dx: 0, dy: 0 };
-        let kanye = { x: 280, y: 180, size: 32, speed: 1.2 };
-        let star = { x: Math.random() * 300 + 30, y: Math.random() * 200 + 30, size: 14 };
-
-        const taylorImg = new Image(); taylorImg.src = "taylorswift.jpg";
-        let taylorLoaded = false; taylorImg.onload = () => { taylorLoaded = true; };
-
-        const kanyeImg = new Image(); kanyeImg.src = "kanye.jpg";
-        let kanyeLoaded = false; kanyeImg.onload = () => { kanyeLoaded = true; };
+        let player = { x: 40, y: 40, size: 28, speed: 2.5, dx: 0, dy: 0 };
+        let ghost = { x: 280, y: 180, size: 28, speed: 1.2 };
+        let star = { x: Math.random() * 300 + 30, y: Math.random() * 200 + 30, size: 12 };
 
         window.addEventListener('keydown', function(e) {
             if (!gameRunning) return;
-            if (e.key === 'ArrowUp') { taylor.dx = 0; taylor.dy = -taylor.speed; }
-            if (e.key === 'ArrowDown') { taylor.dx = 0; taylor.dy = taylor.speed; }
-            if (e.key === 'ArrowLeft') { taylor.dx = -taylor.speed; taylor.dy = 0; }
-            if (e.key === 'ArrowRight') { taylor.dx = taylor.speed; taylor.dy = 0; }
+            if (e.key === 'ArrowUp') { player.dx = 0; player.dy = -player.speed; }
+            if (e.key === 'ArrowDown') { player.dx = 0; player.dy = player.speed; }
+            if (e.key === 'ArrowLeft') { player.dx = -player.speed; player.dy = 0; }
+            if (e.key === 'ArrowRight') { player.dx = player.speed; player.dy = 0; }
         });
 
         function movePlayer(dir) {
             if (!gameRunning) return;
-            if (dir === 'UP') { taylor.dx = 0; taylor.dy = -taylor.speed; }
-            if (dir === 'DOWN') { taylor.dx = 0; taylor.dy = taylor.speed; }
-            if (dir === 'LEFT') { taylor.dx = -taylor.speed; taylor.dy = 0; }
-            if (dir === 'RIGHT') { taylor.dx = taylor.speed; taylor.dy = 0; }
+            if (dir === 'UP') { player.dx = 0; player.dy = -player.speed; }
+            if (dir === 'DOWN') { player.dx = 0; player.dy = player.speed; }
+            if (dir === 'LEFT') { player.dx = -player.speed; player.dy = 0; }
+            if (dir === 'RIGHT') { player.dx = player.speed; player.dy = 0; }
         }
 
         function toggleGame() { if (!gameRunning) { startGame(); } else { stopGame(); } }
 
         function startGame() {
             gameRunning = true; gameScore = 0; gameScoreText.textContent = gameScore;
-            startGameBtn.textContent = "Parar Jogo";
-            taylor.x = 40; taylor.y = 40; taylor.dx = 0; taylor.dy = 0; kanye.x = 280; kanye.y = 180;
+            startGameBtn.textContent = "Stop Game";
+            player.x = 40; player.y = 40; player.dx = 0; player.dy = 0; ghost.x = 280; ghost.y = 180;
             if (gameInterval) clearInterval(gameInterval);
             gameInterval = setInterval(updateGame, 1000 / 60);
         }
 
         function stopGame() {
-            gameRunning = false; startGameBtn.textContent = "Iniciar Jogo";
+            gameRunning = false; startGameBtn.textContent = "Start Game";
             if (gameInterval) clearInterval(gameInterval);
         }
 
         function updateGame() {
-            taylor.x += taylor.dx; taylor.y += taylor.dy;
-            if (taylor.x < 0) taylor.x = 0; if (taylor.x > canvas.width - taylor.size) taylor.x = canvas.width - taylor.size;
-            if (taylor.y < 0) taylor.y = 0; if (taylor.y > canvas.height - taylor.size) taylor.y = canvas.height - taylor.size;
-            if (kanye.x < taylor.x) kanye.x += kanye.speed; if (kanye.x > taylor.x) kanye.x -= kanye.speed;
-            if (kanye.y < taylor.y) kanye.y += kanye.speed; if (kanye.y > taylor.y) kanye.y -= kanye.speed;
+            player.x += player.dx; player.y += player.dy;
+            if (player.x < 0) player.x = 0; if (player.x > canvas.width - player.size) player.x = canvas.width - player.size;
+            if (player.y < 0) player.y = 0; if (player.y > canvas.height - player.size) player.y = canvas.height - player.size;
+            if (ghost.x < player.x) ghost.x += ghost.speed; if (ghost.x > player.x) ghost.x -= ghost.speed;
+            if (ghost.y < player.y) ghost.y += ghost.speed; if (ghost.y > player.y) ghost.y -= ghost.speed;
 
-            let distStar = Math.hypot((taylor.x + taylor.size/2) - (star.x + star.size/2), (taylor.y + taylor.size/2) - (star.y + star.size/2));
-            if (distStar < taylor.size/2 + star.size/2) {
+            let distStar = Math.hypot((player.x + player.size/2) - (star.x + star.size/2), (player.y + player.size/2) - (star.y + star.size/2));
+            if (distStar < player.size/2 + star.size/2) {
                 gameScore += 10; gameScoreText.textContent = gameScore;
                 star.x = Math.random() * (canvas.width - 40) + 20; star.y = Math.random() * (canvas.height - 40) + 20;
             }
 
-            let distKanye = Math.hypot((taylor.x + taylor.size/2) - (kanye.x + kanye.size/2), (taylor.y + taylor.size/2) - (kanye.y + kanye.size/2));
-            if (distKanye < taylor.size * 0.7) {
-                alert("Game Over! O Kanye te pegou! Pontuação final: " + gameScore);
+            let distGhost = Math.hypot((player.x + player.size/2) - (ghost.x + ghost.size/2), (player.y + player.size/2) - (ghost.y + ghost.size/2));
+            if (distGhost < player.size * 0.7) {
+                alert("Game Over! The ghost caught you! Final Score: " + gameScore);
                 stopGame(); return;
             }
             drawGame();
@@ -838,15 +803,11 @@
             ctx.fillStyle = "#111"; ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#f1c40f"; ctx.beginPath(); ctx.arc(star.x, star.y, star.size/2, 0, Math.PI * 2); ctx.fill();
 
-            ctx.save(); ctx.beginPath(); ctx.arc(taylor.x + taylor.size/2, taylor.y + taylor.size/2, taylor.size/2, 0, Math.PI * 2); ctx.clip();
-            if (taylorLoaded) { ctx.drawImage(taylorImg, taylor.x, taylor.y, taylor.size, taylor.size); } 
-            else { ctx.fillStyle = "#ff69b4"; ctx.fillRect(taylor.x, taylor.y, taylor.size, taylor.size); }
-            ctx.restore();
+            // Desenhar Player (Bolinha Amarela estilo Pacman)
+            ctx.fillStyle = "#f39c12"; ctx.beginPath(); ctx.arc(player.x + player.size/2, player.y + player.size/2, player.size/2, 0, Math.PI * 2); ctx.fill();
 
-            ctx.save(); ctx.beginPath(); ctx.arc(kanye.x + kanye.size/2, kanye.y + kanye.size/2, kanye.size/2, 0, Math.PI * 2); ctx.clip();
-            if (kanyeLoaded) { ctx.drawImage(kanyeImg, kanye.x, kanye.y, kanye.size, kanye.size); } 
-            else { ctx.fillStyle = "#34495e"; ctx.fillRect(kanye.x, kanye.y, kanye.size, kanye.size); }
-            ctx.restore();
+            // Desenhar Ghost (Fantasma Vermelho)
+            ctx.fillStyle = "#e74c3c"; ctx.beginPath(); ctx.arc(ghost.x + ghost.size/2, ghost.y + ghost.size/2, ghost.size/2, 0, Math.PI * 2); ctx.fill();
         }
     </script>
 </body>
