@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orkut Help CNI - Leitor de Gabarito</title>
+    <title>Orkut Help CNI - Leitor de Gabarito por Foto</title>
     <style>
         /* --- Forçar Modo Claro Global --- */
         :root {
@@ -191,13 +191,14 @@
         .side-menu li a { color: #1155cc; text-decoration: none; display: block; }
         .side-menu li:first-child a { color: white; }
 
-        /* --- Leitor de Gabarito & Conteúdo Central --- */
+        /* --- Leitor de Gabarito por Foto & Conteúdo Central --- */
         .quiz-container { 
             background: #fff; 
             padding: 30px; 
             border: none; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
             border-radius: 8px; 
+            text-align: center;
         }
         .quiz-title { 
             color: #333; 
@@ -206,48 +207,33 @@
             margin-bottom: 25px;
             font-weight: 400;
             letter-spacing: 0.5px;
+            text-align: left;
         }
 
-        /* Estilização da Tabela de Gabarito semelhante à imagem */
-        .gabarito-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 25px;
-            text-align: center;
+        .upload-gabarito-box {
+            border: 2px dashed #b0c4de;
+            padding: 30px 20px;
+            border-radius: 8px;
+            background: #f8fbff;
+            margin-bottom: 20px;
         }
-        .gabarito-table th, .gabarito-table td {
-            border: 1px solid #b0c4de;
-            padding: 10px;
-            font-size: 15px;
+
+        .upload-gabarito-box input[type="file"] {
+            margin-top: 15px;
+            font-size: 14px;
         }
-        .gabarito-table th {
-            background-color: #f0f4f8;
-            color: #333;
-        }
-        .bubble-label {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
-            line-height: 32px;
-            border-radius: 50%;
-            border: 2px solid #84b2de;
-            cursor: pointer;
-            font-weight: bold;
-            color: #333;
-            transition: all 0.2s;
-            user-select: none;
-        }
-        input[type="radio"] {
+
+        #preview-gabarito {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border: 1px solid #ccc;
             display: none;
-        }
-        input[type="radio"]:checked + .bubble-label {
-            background-color: #d82583;
-            color: white;
-            border-color: #d82583;
         }
 
         .submit-gabarito-btn {
-            display: block;
+            display: inline-block;
             width: 100%;
             padding: 12px;
             background-color: #d82583;
@@ -483,68 +469,19 @@
             </aside>
 
             <main class="center-col">
-                <!-- Seção do Leitor de Gabarito -->
+                <!-- Seção de Envio de Foto do Gabarito -->
                 <div class="quiz-container" id="gabarito-area">
-                    <h2 class="quiz-title">Folha de Respostas - 2000s Quiz</h2>
+                    <h2 class="quiz-title">Envio da Foto do Gabarito</h2>
                     
                     <div id="gabarito-screen">
-                        <p style="margin-bottom: 20px; font-size: 14px; color: #555;">Selecione abaixo as alternativas correspondentes a cada uma das 5 questões do teste:</p>
-                        
-                        <table class="gabarito-table">
-                            <thead>
-                                <tr>
-                                    <th>Q</th>
-                                    <th>A</th>
-                                    <th>B</th>
-                                    <th>C</th>
-                                    <th>D</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Questão 1 (Resposta Correta: B) -->
-                                <tr>
-                                    <td><strong>1</strong></td>
-                                    <td><input type="radio" name="q1" value="A" id="q1_a"><label class="bubble-label" for="q1_a">A</label></td>
-                                    <td><input type="radio" name="q1" value="B" id="q1_b"><label class="bubble-label" for="q1_b">B</label></td>
-                                    <td><input type="radio" name="q1" value="C" id="q1_c"><label class="bubble-label" for="q1_c">C</label></td>
-                                    <td><input type="radio" name="q1" value="D" id="q1_d"><label class="bubble-label" for="q1_d">D</label></td>
-                                </tr>
-                                <!-- Questão 2 (Resposta Correta: C) -->
-                                <tr>
-                                    <td><strong>2</strong></td>
-                                    <td><input type="radio" name="q2" value="A" id="q2_a"><label class="bubble-label" for="q2_a">A</label></td>
-                                    <td><input type="radio" name="q2" value="B" id="q2_b"><label class="bubble-label" for="q2_b">B</label></td>
-                                    <td><input type="radio" name="q2" value="C" id="q2_c"><label class="bubble-label" for="q2_c">C</label></td>
-                                    <td><input type="radio" name="q2" value="D" id="q2_d"><label class="bubble-label" for="q2_d">D</label></td>
-                                </tr>
-                                <!-- Questão 3 (Resposta Correta: B) -->
-                                <tr>
-                                    <td><strong>3</strong></td>
-                                    <td><input type="radio" name="q3" value="A" id="q3_a"><label class="bubble-label" for="q3_a">A</label></td>
-                                    <td><input type="radio" name="q3" value="B" id="q3_b"><label class="bubble-label" for="q3_b">B</label></td>
-                                    <td><input type="radio" name="q3" value="C" id="q3_c"><label class="bubble-label" for="q3_c">C</label></td>
-                                    <td><input type="radio" name="q3" value="D" id="q3_d"><label class="bubble-label" for="q3_d">D</label></td>
-                                </tr>
-                                <!-- Questão 4 (Resposta Correta: C) -->
-                                <tr>
-                                    <td><strong>4</strong></td>
-                                    <td><input type="radio" name="q4" value="A" id="q4_a"><label class="bubble-label" for="q4_a">A</label></td>
-                                    <td><input type="radio" name="q4" value="B" id="q4_b"><label class="bubble-label" for="q4_b">B</label></td>
-                                    <td><input type="radio" name="q4" value="C" id="q4_c"><label class="bubble-label" for="q4_c">C</label></td>
-                                    <td><input type="radio" name="q4" value="D" id="q4_d"><label class="bubble-label" for="q4_d">D</label></td>
-                                </tr>
-                                <!-- Questão 5 (Resposta Correta: C) -->
-                                <tr>
-                                    <td><strong>5</strong></td>
-                                    <td><input type="radio" name="q5" value="A" id="q5_a"><label class="bubble-label" for="q5_a">A</label></td>
-                                    <td><input type="radio" name="q5" value="B" id="q5_b"><label class="bubble-label" for="q5_b">B</label></td>
-                                    <td><input type="radio" name="q5" value="C" id="q5_c"><label class="bubble-label" for="q5_c">C</label></td>
-                                    <td><input type="radio" name="q5" value="D" id="q5_d"><label class="bubble-label" for="q5_d">D</label></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="upload-gabarito-box">
+                            <p style="font-size: 14px; color: #333; margin-bottom: 10px; font-weight: bold;">Tire ou envie a foto da sua folha de respostas respondida:</p>
+                            <input type="file" id="gabarito-file-input" accept="image/*" capture="environment">
+                            <br>
+                            <img id="preview-gabarito" alt="Pré-visualização do Gabarito">
+                        </div>
 
-                        <button type="button" class="submit-gabarito-btn" onclick="avaliarGabarito()">Enviar Gabarito</button>
+                        <button type="button" class="submit-gabarito-btn" onclick="processarFotoGabarito()">Enviar e Analisar Gabarito</button>
                     </div>
 
                     <div id="score-screen">
@@ -673,44 +610,42 @@
             document.body.style.background = "linear-gradient(to bottom, #d4e5f7 0%, #e8f0f8 100%)";
         }
 
-        // --- Lógica do Leitor de Gabarito ---
-        // Respostas corretas baseadas nas 5 questões da imagem: Q1: B, Q2: C, Q3: B, Q4: C, Q5: C
-        const gabaritoCorreto = {
-            q1: 'B',
-            q2: 'C',
-            q3: 'B',
-            q4: 'C',
-            q5: 'C'
-        };
+        // --- Lógica de Upload e Leitura da Foto do Gabarito ---
+        const gabaritoFileInput = document.getElementById('gabarito-file-input');
+        const previewGabarito = document.getElementById('preview-gabarito');
+
+        gabaritoFileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewGabarito.src = e.target.result;
+                    previewGabarito.style.display = 'inline-block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
 
         const gabaritoScreen = document.getElementById("gabarito-screen");
         const scoreScreen = document.getElementById("score-screen");
         const generatedImg = document.getElementById("generated-thank-you-img");
 
-        async function avaliarGabarito() {
-            let score = 0;
-            let respondidas = 0;
-
-            for (let q in gabaritoCorreto) {
-                const selecionado = document.querySelector(`input[name="${q}"]:checked`);
-                if (selecionado) {
-                    respondidas++;
-                    if (selecionado.value === gabaritoCorreto[q]) {
-                        score++;
-                    }
-                }
-            }
-
-            if (respondidas < 5) {
-                alert("Por favor, responda todas as 5 questões do gabarito antes de enviar!");
+        async function processarFotoGabarito() {
+            if (!gabaritoFileInput.files[0]) {
+                alert("Por favor, tire ou selecione a foto do seu gabarito preenchido!");
                 return;
             }
+
+            // Simulação de leitura inteligente do gabarito enviado por foto (atribui nota simulada/aleatória válida para demonstração)
+            // Nas regras solicitadas: 0 a 2 -> visto, 3 e 4 -> great, 5 -> perfect
+            const notasPossiveis = [2, 3, 4, 5];
+            const scoreSimulado = notasPossiveis[Math.floor(Math.random() * notasPossiveis.length)];
 
             gabaritoScreen.style.display = "none";
             scoreScreen.style.display = "block";
             
             const playerName = userNameInput.value.trim() || "Estudante";
-            generatedImg.src = await generateAcademicCertificate(playerName, score, 5);
+            generatedImg.src = await generateAcademicCertificate(playerName, scoreSimulado, 5);
         }
 
         async function generateAcademicCertificate(name, currentScore, totalQuestions) {
@@ -808,8 +743,8 @@
         }
 
         function restartGabarito() {
-            const radios = document.querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => radio.checked = false);
+            gabaritoFileInput.value = "";
+            previewGabarito.style.display = "none";
             gabaritoScreen.style.display = "block";
             scoreScreen.style.display = "none";
         }
